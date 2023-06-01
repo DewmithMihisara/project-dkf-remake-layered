@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="672.0" prefWidth="1295.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.project_dkf.controller.ShipingFormController">
+   <children>
+      <ImageView fitHeight="672.0" fitWidth="1295.0" layoutX="282.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../img/Shipping.png" />
+         </image>
+      </ImageView>
+      <ComboBox fx:id="orderIdCmbBox" layoutX="105.0" layoutY="133.0" onAction="#orderIdOnAction" prefHeight="40.0" prefWidth="244.0" style="-fx-text-fill: white; -fx-background-color: tranceparent;" />
+      <ComboBox fx:id="clothIdCmbBox" disable="true" layoutX="105.0" layoutY="231.0" onAction="#clothIdCmbBoxOnAction" prefHeight="40.0" prefWidth="193.0" style="-fx-text-fill: white; -fx-background-color: tranceparent;" />
+      <ComboBox fx:id="sizeCmbBx" layoutX="430.0" layoutY="231.0" onAction="#sizeCmbBxOnAction" prefHeight="40.0" prefWidth="88.0" style="-fx-text-fill: white; -fx-background-color: tranceparent;" />
+      <TextField fx:id="qtyTxt" layoutX="654.0" layoutY="232.0" prefHeight="40.0" prefWidth="193.0" style="-fx-background-color: tranceparent; -fx-text-fill: #FFFF;">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <Label fx:id="buyerNameTxt" layoutX="553.0" layoutY="99.0" text="Label" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="buyerAddressTxt" layoutX="572.0" layoutY="147.0" text="Label" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="dateLbl" layoutX="1052.0" layoutY="99.0" text="Label" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <TableView fx:id="shipTbl" layoutX="164.0" layoutY="330.0" prefHeight="248.0" prefWidth="638.0">
+         <columns>
+            <TableColumn fx:id="clothIdColm" prefWidth="186.9940185546875" text="Clothe Id" />
+            <TableColumn fx:id="descColm" prefWidth="212.62570190429688" text="Description" />
+            <TableColumn fx:id="sizeColm" prefWidth="76.374267578125" text="Size" />
+            <TableColumn fx:id="qtyColm" prefWidth="163.1429443359375" text="Qty" />
+         </columns>
+      </TableView>
+      <Button layoutX="940.0" layoutY="336.0" mnemonicParsing="false" onAction="#deleteBtnOnAction" prefHeight="44.0" prefWidth="200.0" styleClass="btn" stylesheets="@../style/loginStyle.css" text="Delete" textFill="WHITE" AnchorPane.rightAnchor="155.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button layoutX="943.0" layoutY="404.0" mnemonicParsing="false" onAction="#addBtnOnAction" prefHeight="44.0" prefWidth="200.0" styleClass="btn" stylesheets="@../style/loginStyle.css" text="Add" textFill="WHITE" AnchorPane.rightAnchor="155.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button layoutX="945.0" layoutY="478.0" mnemonicParsing="false" onAction="#placeOnAction" prefHeight="44.0" prefWidth="200.0" styleClass="btn" stylesheets="@../style/loginStyle.css" text="Place" textFill="WHITE" AnchorPane.rightAnchor="155.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Label fx:id="AvalabilityLbl" layoutX="987.0" layoutY="238.0" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

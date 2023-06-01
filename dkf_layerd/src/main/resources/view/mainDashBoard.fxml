@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="900.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.project_dkf.controller.MainDashBoardController">
+   <children>
+      <ImageView fitHeight="900.0" fitWidth="1440.0" layoutX="-3.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../img/DashboardForm.png" />
+         </image>
+      </ImageView>
+      <AnchorPane fx:id="midleStage" layoutX="72.0" layoutY="156.0" prefHeight="672.0" prefWidth="1295.0" style="-fx-background-color: tranceperant;" AnchorPane.bottomAnchor="72.0" AnchorPane.leftAnchor="72.0" AnchorPane.rightAnchor="73.0" AnchorPane.topAnchor="156.0">
+         <children>
+            <Button layoutX="53.0" layoutY="38.0" mnemonicParsing="false" onAction="#testBtnOnAction" prefHeight="598.0" prefWidth="261.0" styleClass="menuBtn" stylesheets="@../style/menuBtn.css" AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="53.0" AnchorPane.rightAnchor="981.0" AnchorPane.topAnchor="38.0">
+               <font>
+                  <Font size="43.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="407.0" fitWidth="219.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/logo/order.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button layoutX="436.0" layoutY="38.0" mnemonicParsing="false" onAction="#buyerBtnOnAction" prefHeight="280.0" prefWidth="261.0" stylesheets="@../style/menuBtn.css" AnchorPane.leftAnchor="360.0" AnchorPane.topAnchor="38.0">
+               <graphic>
+                  <ImageView fitHeight="221.0" fitWidth="218.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/logo/buyerLogo.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="retailBtn" layoutX="397.0" layoutY="303.0" mnemonicParsing="false" onAction="#retailBtnOnAction" prefHeight="280.0" prefWidth="261.0" stylesheets="@../style/menuBtn.css" AnchorPane.leftAnchor="360.0" AnchorPane.topAnchor="356.0">
+               <graphic>
+                  <ImageView fitHeight="235.0" fitWidth="216.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/logo/retailLogo.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="employeeBtn" layoutX="734.0" layoutY="27.0" mnemonicParsing="false" onAction="#employeeBtnOnAction" prefHeight="598.0" prefWidth="261.0" styleClass="menuBtn" stylesheets="@../style/menuBtn.css" AnchorPane.leftAnchor="667.0" AnchorPane.topAnchor="38.0">
+               <font>
+                  <Font size="43.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="536.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/logo/employeeLogo.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="logOutBtn" layoutX="978.0" layoutY="320.0" mnemonicParsing="false" onAction="#logOutBtnOnAction" prefHeight="104.0" prefWidth="261.0" stylesheets="@../style/menuBtn.css" AnchorPane.leftAnchor="974.0" AnchorPane.topAnchor="532.0">
+               <graphic>
+                  <ImageView fitHeight="70.0" fitWidth="204.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/logo/LOG-OUT.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button layoutX="988.0" layoutY="330.0" mnemonicParsing="false" onAction="#settingBtnOnActon" onMouseEntered="#settingMouseEnterOnAction" prefHeight="178.0" prefWidth="261.0" stylesheets="@../style/menuBtn.css" AnchorPane.leftAnchor="974.0" AnchorPane.topAnchor="316.0">
+               <graphic>
+                  <ImageView fx:id="settingImg" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/logo/settingBtnLogo.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Label fx:id="timeTxt" layoutX="998.0" layoutY="152.0" text="00:00:00" textFill="WHITE">
+               <font>
+                  <Font size="51.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Button fx:id="bkBtn" layoutX="1331.0" layoutY="16.0" mnemonicParsing="false" onAction="#bkBtnOnAction" prefHeight="51.0" prefWidth="62.0" styleClass="bkBtn" stylesheets="@../style/dashboardStyle.css" visible="false" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="16.0">
+         <graphic>
+            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/logo/HomeIcon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="assBtn" layoutX="72.0" layoutY="99.0" minHeight="29.0" minWidth="29.0" mnemonicParsing="false" onAction="#assistantOnAction" prefHeight="36.0" prefWidth="39.0" stylesheets="@../style/menuBtn.css">
+         <graphic>
+            <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/logo/microphone.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label fx:id="assLbl" layoutX="129.0" layoutY="105.0" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

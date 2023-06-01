@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="root" prefHeight="672.0" prefWidth="1295.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.project_dkf.controller.OutputFormController">
+   <children>
+      <ImageView fitHeight="672.0" fitWidth="1295.0" layoutX="252.0" layoutY="173.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../img/Outputs.png" />
+         </image>
+      </ImageView>
+      <ComboBox fx:id="orderIdCmbBox" layoutX="104.0" layoutY="134.0" onAction="#orderIdOnAction" prefHeight="40.0" prefWidth="301.0" style="-fx-text-fill: white; -fx-background-color: tranceparent;" />
+      <Text fx:id="dateTxt" fill="WHITE" layoutX="696.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="229.37973022460938">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="clrCmbBx" disable="true" layoutX="104.0" layoutY="232.0" prefHeight="40.0" prefWidth="193.0" style="-fx-text-fill: white; -fx-background-color: tranceparent;" />
+      <ComboBox fx:id="sizeCmbBx" layoutX="433.0" layoutY="233.0" prefHeight="40.0" prefWidth="88.0" style="-fx-text-fill: white; -fx-background-color: tranceparent;" />
+      <TableView fx:id="outTbl" layoutX="199.0" layoutY="342.0" prefHeight="302.0" prefWidth="907.0">
+         <columns>
+            <TableColumn fx:id="dateCol" prefWidth="155.91506958007812" text="Date" />
+            <TableColumn fx:id="timeCol" prefWidth="186.9940185546875" text="Time" />
+            <TableColumn fx:id="clrCol" prefWidth="186.9940185546875" text="Clothe Id" />
+            <TableColumn fx:id="sizeCol" prefWidth="186.9940185546875" text="Size" />
+            <TableColumn fx:id="qtyCol" prefWidth="186.9940185546875" text="Qty" />
+         </columns>
+      </TableView>
+      <Button layoutX="1026.0" layoutY="140.0" mnemonicParsing="false" onAction="#addBtnOnAction" prefHeight="44.0" prefWidth="200.0" styleClass="btn" stylesheets="@../style/loginStyle.css" text="Add" textFill="WHITE" AnchorPane.rightAnchor="69.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button layoutX="1026.0" layoutY="229.0" mnemonicParsing="false" onAction="#deleteBtnOnAction" prefHeight="44.0" prefWidth="200.0" styleClass="btn" stylesheets="@../style/loginStyle.css" text="Delete" textFill="WHITE" AnchorPane.bottomAnchor="400.0" AnchorPane.rightAnchor="69.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <TextField fx:id="qtyTxt" layoutX="657.0" layoutY="232.0" prefHeight="40.0" prefWidth="193.0" style="-fx-background-color: tranceparent; -fx-text-fill: #FFFF;" AnchorPane.bottomAnchor="400.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <Label fx:id="timeLbl" layoutX="700.0" layoutY="149.0" text="Label" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Button layoutX="1026.0" layoutY="59.0" mnemonicParsing="false" onAction="#reportOnAction" prefHeight="44.0" prefWidth="200.0" styleClass="btn" stylesheets="@../style/loginStyle.css" text="Today Output" AnchorPane.rightAnchor="69.0">
+         <font>
+            <Font size="24.0" />
+         </font></Button>
+   </children>
+</AnchorPane>

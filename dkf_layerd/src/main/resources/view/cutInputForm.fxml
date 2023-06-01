@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="pane" prefHeight="672.0" prefWidth="1295.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.project_dkf.controller.CutInputFormController">
+   <children>
+      <ImageView fitHeight="672.0" fitWidth="1295.0" layoutX="232.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../img/CutInput.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="-63.0" layoutY="406.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="224.0" rotate="270.0" style="-fx-background-color: TRANCEPARENT; -fx-text-fill: white;" text="CUT" AnchorPane.bottomAnchor="198.0" AnchorPane.leftAnchor="-63.0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+      <Button layoutX="-48.0" layoutY="123.0" mnemonicParsing="false" onAction="#materialBtnOnAction" prefHeight="67.0" prefWidth="224.0" rotate="270.0" styleClass="signBtn" stylesheets="@../style/loginStyle.css" text="MATERIALS" AnchorPane.bottomAnchor="399.0" AnchorPane.leftAnchor="-63.0" AnchorPane.topAnchor="205.0">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Button>
+      <ComboBox fx:id="orderIdCmbBox" layoutX="187.0" layoutY="116.0" onAction="#orderIdOnAction" prefHeight="40.0" prefWidth="301.0" style="-fx-text-fill: white; -fx-background-color: tranceparent;" />
+      <ComboBox fx:id="clrCmbBx" disable="true" layoutX="187.0" layoutY="230.0" prefHeight="40.0" prefWidth="193.0" style="-fx-text-fill: white; -fx-background-color: tranceparent;" />
+      <ComboBox fx:id="sizeCmbBx" layoutX="489.0" layoutY="230.0" prefHeight="40.0" prefWidth="88.0" style="-fx-text-fill: white; -fx-background-color: tranceparent;" />
+      <TextField fx:id="qtyTxt" layoutX="990.0" layoutY="225.0" prefHeight="40.0" prefWidth="193.0" style="-fx-background-color: tranceparent; -fx-text-fill: #FFFF;">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <Text fx:id="dateTxt" fill="WHITE" layoutX="727.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="229.37973022460938">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <TableView fx:id="cutTbl" layoutX="172.0" layoutY="304.0" prefHeight="248.0" prefWidth="1030.0">
+         <columns>
+            <TableColumn fx:id="dateColm" prefWidth="155.91506958007812" text="Date" />
+            <TableColumn fx:id="timeColm" prefWidth="186.9940185546875" text="Time" />
+            <TableColumn fx:id="clIdColm" prefWidth="186.9940185546875" text="Clothe Id" />
+            <TableColumn fx:id="sizeColm" prefWidth="143.241943359375" text="Size" />
+            <TableColumn fx:id="typeColm" prefWidth="188.2364501953125" text="Type" />
+            <TableColumn fx:id="qtyColm" prefWidth="163.1429443359375" text="Qty" />
+         </columns>
+      </TableView>
+      <Button layoutX="1002.0" layoutY="592.0" mnemonicParsing="false" onAction="#addBtnOnAction" prefHeight="44.0" prefWidth="200.0" styleClass="btn" stylesheets="@../style/loginStyle.css" text="Add" textFill="WHITE" AnchorPane.bottomAnchor="35.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button layoutX="769.0" layoutY="592.0" mnemonicParsing="false" onAction="#deleteBtnOnAction" prefHeight="44.0" prefWidth="200.0" styleClass="btn" stylesheets="@../style/loginStyle.css" text="Delete" textFill="WHITE" AnchorPane.bottomAnchor="35.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <TextField fx:id="typeTxt" layoutX="687.0" layoutY="230.0" prefHeight="40.0" prefWidth="193.0" style="-fx-background-color: tranceparent; -fx-text-fill: #FFFF;">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <Label fx:id="timeLbl" layoutX="731.0" layoutY="134.0" text="Label" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

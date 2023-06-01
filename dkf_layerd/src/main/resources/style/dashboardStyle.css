@@ -1,0 +1,24 @@
+.iconBtn{
+    -fx-background-color: tranceparent;
+    -fx-background-radius: 25,25,25,25;
+}
+.iconBtn:hover{
+    -fx-background-color: #444B8B;
+    -fx-text-fill:#FFFFFF ;
+}
+.iconBtn:pressed{
+    -fx-background-color: #444B8B;
+    -fx-text-fill:#FFFFFF ;
+}
+.bkBtn {
+    -fx-background-color: tranceparent;
+    -fx-background-radius: 25, 25, 25, 25;
+}
+.bkBtn:hover{
+    -fx-background-color: #023E8A;
+    -fx-text-fill:#FFFFFF ;
+}
+.bkBtn:pressed{
+    -fx-background-color: #023E8A;
+    -fx-text-fill:#FFFFFF ;
+}

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="900.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.project_dkf.controller.DashboardFormController">
+   <children>
+      <ImageView fitHeight="900.0" fitWidth="1440.0" layoutX="137.0" layoutY="-11.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../img/DashboardForm.png" />
+         </image>
+      </ImageView>
+      <AnchorPane fx:id="midleStage" layoutX="72.0" layoutY="156.0" prefHeight="672.0" prefWidth="1295.0" style="-fx-background-color: tranceperant;" AnchorPane.bottomAnchor="72.0" AnchorPane.leftAnchor="72.0" AnchorPane.rightAnchor="73.0" AnchorPane.topAnchor="156.0">
+         <children>
+            <Button fx:id="logOutBtn" layoutX="1177.0" layoutY="578.0" mnemonicParsing="false" onAction="#logOutBtnOnAction" styleClass="iconBtn" stylesheets="@../style/dashboardStyle.css" AnchorPane.bottomAnchor="55.0" AnchorPane.rightAnchor="65.0" />
+            <Button fx:id="userBtn" layoutX="1077.0" layoutY="574.0" mnemonicParsing="false" onAction="#userBtnOnAction" styleClass="iconBtn" stylesheets="@../style/dashboardStyle.css" AnchorPane.bottomAnchor="55.0" />
+         </children></AnchorPane>
+      <Button fx:id="orderBtn" layoutX="416.0" layoutY="16.0" mnemonicParsing="false" onAction="#orderBtnOnAction" prefWidth="175.0" styleClass="bkBtn" stylesheets="@../style/dashboardStyle.css" text="Order" AnchorPane.leftAnchor="416.0" AnchorPane.topAnchor="16.0">
+         <graphic>
+            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/logo/OrderLogo.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button layoutX="909.0" layoutY="16.0" mnemonicParsing="false" onAction="#outputBtnOnAction" prefWidth="175.0" styleClass="bkBtn" stylesheets="@../style/dashboardStyle.css" text="Output" AnchorPane.leftAnchor="834.0" AnchorPane.topAnchor="16.0">
+         <graphic>
+            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/logo/outLogo.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button layoutX="1103.0" layoutY="15.0" mnemonicParsing="false" onAction="#packingBtnOnAction" prefWidth="175.0" styleClass="bkBtn" stylesheets="@../style/dashboardStyle.css" text="Packing" AnchorPane.leftAnchor="1043.0" AnchorPane.topAnchor="15.0">
+         <graphic>
+            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/logo/packingLogo.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button layoutX="625.0" layoutY="22.0" mnemonicParsing="false" onAction="#inputBtnOnAction" prefWidth="175.0" styleClass="bkBtn" stylesheets="@../style/dashboardStyle.css" text="Input" AnchorPane.leftAnchor="625.0" AnchorPane.topAnchor="16.0">
+         <graphic>
+            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/logo/input.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="bkBtn" layoutX="1341.0" layoutY="26.0" mnemonicParsing="false" onAction="#bkBtnOnAction" prefHeight="51.0" prefWidth="62.0" styleClass="bkBtn" stylesheets="@../style/dashboardStyle.css" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="16.0">
+         <graphic>
+            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/logo/HomeIcon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

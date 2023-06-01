@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="midleStage" prefHeight="672.0" prefWidth="1295.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.project_dkf.controller.BuyerFormController">
+   <children>
+      <ImageView fitHeight="672.0" fitWidth="1295.0" layoutX="183.0" layoutY="142.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../img/BuyerManagement.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="buyerNameTxt" layoutX="108.0" layoutY="234.0" onAction="#buyerNameTxtOnAction" prefHeight="40.0" prefWidth="301.0" style="-fx-background-color: tranceparent; -fx-text-fill: #FFFF;">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <Button fx:id="addBtn" layoutX="995.0" layoutY="525.0" mnemonicParsing="false" onAction="#addBtnOnAction" prefHeight="44.0" prefWidth="200.0" styleClass="btn" stylesheets="@../style/loginStyle.css" text="Add" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <TextField fx:id="buyerAddTxt" layoutX="108.0" layoutY="343.0" onAction="#buyerAddTxtOnAction" prefHeight="40.0" prefWidth="301.0" style="-fx-background-color: tranceparent; -fx-text-fill: #FFFF;">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="BuyerCnTxt" layoutX="108.0" layoutY="453.0" onAction="#BuyerCnTxtOnAction" prefHeight="40.0" prefWidth="301.0" style="-fx-background-color: tranceparent; -fx-text-fill: #FFFF;">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <TableView fx:id="tblBuyer" layoutX="566.0" layoutY="136.0" prefHeight="357.0" prefWidth="630.0">
+        <columns>
+          <TableColumn fx:id="colId" prefWidth="104.0" text="ID" />
+          <TableColumn fx:id="colName" minWidth="7.0" prefWidth="76.0" text="Name" />
+            <TableColumn fx:id="colAddress" minWidth="7.0" prefWidth="283.0" text="Address" />
+            <TableColumn fx:id="colContact" minWidth="7.0" prefWidth="166.0" text="Contact" />
+        </columns>
+      </TableView>
+      <Button fx:id="btnUpdate" layoutX="566.0" layoutY="524.0" mnemonicParsing="false" onAction="#updateBtnOnAction" prefHeight="44.0" prefWidth="200.0" styleClass="btn" stylesheets="@../style/loginStyle.css" text="Select" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button layoutX="780.0" layoutY="525.0" mnemonicParsing="false" onAction="#deleteBtnOnAction" prefHeight="44.0" prefWidth="200.0" styleClass="btn" stylesheets="@../style/loginStyle.css" text="Delete" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Label fx:id="buyerIdTxt" layoutX="185.0" layoutY="134.0" prefHeight="40.0" prefWidth="240.0" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+   </children>
+</AnchorPane>

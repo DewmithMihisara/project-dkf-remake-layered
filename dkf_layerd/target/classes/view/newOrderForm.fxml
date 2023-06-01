@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="root" prefHeight="672.0" prefWidth="1295.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.project_dkf.controller.NewOrderFormController">
+   <children>
+      <ImageView fitHeight="672.0" fitWidth="1295.0" layoutX="665.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../img/NewOrder.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="-33.0" layoutY="410.0" mnemonicParsing="false" onAction="#orderBtnOnAction" rotate="270.0" styleClass="signBtn" stylesheets="@../style/loginStyle.css" text="ORDER" AnchorPane.bottomAnchor="194.0" AnchorPane.leftAnchor="-33.0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+      <Button layoutX="-76.0" layoutY="205.0" mnemonicParsing="false" rotate="270.0" style="-fx-background-color: tranceparant; -fx-text-fill: white;" text="NEW ORDER" AnchorPane.bottomAnchor="399.0" AnchorPane.leftAnchor="-76.0" AnchorPane.topAnchor="205.0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+      <Button layoutX="472.0" layoutY="223.0" mnemonicParsing="false" onAction="#newBuyerBtnOnAction" prefHeight="44.0" prefWidth="81.0" styleClass="btn" stylesheets="@../style/loginStyle.css" text="+ New" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Button>
+      <Button layoutX="1045.0" layoutY="579.0" mnemonicParsing="false" onAction="#nextBtnOnAction" prefHeight="44.0" prefWidth="209.0" styleClass="btn" stylesheets="@../style/loginStyle.css" text="Next" textFill="WHITE" AnchorPane.bottomAnchor="49.0" AnchorPane.rightAnchor="41.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Button>
+      <TextField fx:id="companyNameTxt" layoutX="153.0" layoutY="338.0" prefHeight="40.0" prefWidth="301.0" style="-fx-background-color: tranceparent; -fx-text-fill: #FFFF;">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="paymentTermTxt" layoutX="153.0" layoutY="449.0" onAction="#paymentTermTxtOnAction" prefHeight="40.0" prefWidth="301.0" style="-fx-background-color: tranceparent; -fx-text-fill: #FFFF;">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="ttlQtyTxt" layoutX="707.0" layoutY="225.0" onAction="#ttlQtyTxtOnAction" prefHeight="40.0" prefWidth="301.0" style="-fx-background-color: tranceparent; -fx-text-fill: #FFFF;">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="daylyOutTxt" layoutX="706.0" layoutY="337.0" onAction="#daylyOutTxtOnAction" prefHeight="40.0" prefWidth="301.0" style="-fx-background-color: tranceparent; -fx-text-fill: #FFFF;">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <Text fx:id="orderDateTxt" fill="WHITE" layoutX="803.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="229.37973022460938">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <DatePicker fx:id="dedlineDate" layoutX="707.0" layoutY="449.0" prefHeight="40.0" prefWidth="301.0" style="-fx-background-color: tranceparent;" />
+      <ComboBox fx:id="companyCmbBox" layoutX="150.0" layoutY="225.0" onAction="#companyCmbOnAction" prefHeight="40.0" prefWidth="301.0" style="-fx-text-fill: white; -fx-background-color: tranceparent;" />
+      <Label fx:id="oIdLbl" layoutX="222.0" layoutY="113.0" text="Label" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

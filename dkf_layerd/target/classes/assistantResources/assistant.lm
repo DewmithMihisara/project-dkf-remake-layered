@@ -1,0 +1,50 @@
+Language model created by QuickLM on Thu Apr 27 11:29:53 EDT 2023
+Copyright (c) 1996-2010 Carnegie Mellon University and Alexander I. Rudnicky
+
+The model is in standard ARPA format, designed by Doug Paul while he was at MITRE.
+
+The code that was used to produce this language model is available in Open Source.
+Please visit http://www.speech.cs.cmu.edu/tools/ for more information
+
+The (fixed) discount mass is 0.5. The backoffs are computed using the ratio method.
+This model based on a corpus of 6 sentences and 8 words
+
+\data\
+ngram 1=8
+ngram 2=12
+ngram 3=7
+
+\1-grams:
+-0.8016 </s> -0.3010
+-0.8016 <s> -0.2126
+-1.5798 INPUT -0.2264
+-1.5798 NEW -0.2775
+-1.2788 ORDER -0.2264
+-1.5798 OUTPUT -0.2264
+-1.5798 PACKING -0.2264
+-1.5798 SETTINGS -0.2264
+
+\2-grams:
+-1.0792 <s> INPUT 0.0000
+-1.0792 <s> NEW 0.0000
+-1.0792 <s> ORDER 0.0000
+-1.0792 <s> OUTPUT 0.0000
+-1.0792 <s> PACKING 0.0000
+-1.0792 <s> SETTINGS 0.0000
+-0.3010 INPUT </s> -0.3010
+-0.3010 NEW ORDER 0.0000
+-0.3010 ORDER </s> -0.3010
+-0.3010 OUTPUT </s> -0.3010
+-0.3010 PACKING </s> -0.3010
+-0.3010 SETTINGS </s> -0.3010
+
+\3-grams:
+-0.3010 <s> INPUT </s>
+-0.3010 <s> NEW ORDER
+-0.3010 <s> ORDER </s>
+-0.3010 <s> OUTPUT </s>
+-0.3010 <s> PACKING </s>
+-0.3010 <s> SETTINGS </s>
+-0.3010 NEW ORDER </s>
+
+\end\

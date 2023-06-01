@@ -1,0 +1,38 @@
+.textBox{
+    -fx-background-color: tranceparent;
+    -fx-text-fill: #FFFF;
+}
+
+.btn{
+    -fx-background-radius: 20,20,20,20;
+    -fx-background-color: #FFFF;
+    -fx-text-fill: #023E8A;
+}
+.btn:hover{
+    -fx-background-color: #0096C7;
+    -fx-text-fill:  #FFFF;
+}
+.btn:pressed{
+    -fx-background-color: #0096C7;
+    -fx-text-fill:  #FFFF;
+}
+.btn2{
+    -fx-background-color: tranceparent;
+    -fx-text-fill: #8FB3CE;
+}
+.btn2:hover{
+    -fx-text-fill:  #FFFF;
+}
+.btn2:pressed{
+    -fx-text-fill:  #FFFF;
+}
+.signBtn{
+    -fx-background-color: tranceparent;
+    -fx-text-fill: #8395BB;
+}
+.signBtn:hover{
+    -fx-text-fill: #FFFF;
+}
+.signBtn:pressed{
+    -fx-text-fill: #FFFF;
+}

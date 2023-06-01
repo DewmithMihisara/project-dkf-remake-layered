@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="900.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.project_dkf.controller.NewAcFormController">
+   <children>
+      <ImageView fitHeight="900.0" fitWidth="1440.0" layoutX="206.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../img/signUpForm.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="usrTxt" layoutX="545.0" layoutY="384.0" onAction="#usrTxtOnAction" prefHeight="40.0" prefWidth="355.0" styleClass="textBox" stylesheets="@../style/loginStyle.css">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="jobTxt" layoutX="545.0" layoutY="458.0" onAction="#jobTxtOnAction" prefHeight="40.0" prefWidth="355.0" styleClass="textBox" stylesheets="@../style/loginStyle.css">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="PhoneTxt" layoutX="545.0" layoutY="531.0" onAction="#PhoneTxtOnAction" prefHeight="40.0" prefWidth="355.0" styleClass="textBox" stylesheets="@../style/loginStyle.css">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="addressTxt" layoutX="545.0" layoutY="608.0" onAction="#addressTxtOnAction" prefHeight="40.0" prefWidth="355.0" styleClass="textBox" stylesheets="@../style/loginStyle.css">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <Button fx:id="nxtBtn" layoutX="620.0" layoutY="693.0" mnemonicParsing="false" onAction="#nextBtnOnAction" prefHeight="44.0" prefWidth="200.0" styleClass="btn" stylesheets="@../style/loginStyle.css" text="Next" textFill="WHITE" AnchorPane.leftAnchor="620.0" AnchorPane.topAnchor="693.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button layoutX="529.0" layoutY="269.0" mnemonicParsing="false" onAction="#signInBtnOnActon" styleClass="signBtn" stylesheets="@../style/loginStyle.css" text="SIGN IN">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button layoutX="611.0" layoutY="269.0" mnemonicParsing="false" style="-fx-background-color: tranceparent; -fx-text-fill: white;" text="SIGN UP">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Line endX="77.0" layoutX="608.99" layoutY="305.0" startX="24.0" stroke="WHITE" strokeWidth="3.0" />
+      <Button layoutX="489.0" layoutY="124.0" minHeight="29.0" minWidth="29.0" mnemonicParsing="false" onAction="#bkBtnOnAction" prefHeight="36.0" prefWidth="39.0" stylesheets="@../style/menuBtn.css" AnchorPane.leftAnchor="479.0" AnchorPane.topAnchor="114.0">
+         <graphic>
+            <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/logo/previous.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>

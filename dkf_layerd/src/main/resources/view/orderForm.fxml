@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="root" prefHeight="672.0" prefWidth="1295.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.project_dkf.controller.OrderFormController">
+   <children>
+      <ImageView fitHeight="672.0" fitWidth="1295.0" layoutX="215.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../img/Order.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="-26.0" layoutY="405.0" mnemonicParsing="false" rotate="270.0" style="-fx-background-color: tranceparant; -fx-text-fill: white;" text="ORDER" AnchorPane.bottomAnchor="194.0" AnchorPane.leftAnchor="-33.0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+      <Button layoutX="-69.0" layoutY="221.0" mnemonicParsing="false" onAction="#newOrderBtnOnAction" rotate="270.0" styleClass="signBtn" stylesheets="@../style/loginStyle.css" text="NEW ORDER" AnchorPane.bottomAnchor="399.0" AnchorPane.leftAnchor="-76.0" AnchorPane.topAnchor="205.0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+      <ComboBox fx:id="orderIdCmbBox" layoutX="186.0" layoutY="116.0" onAction="#orderIdOnAction" prefHeight="40.0" prefWidth="301.0" style="-fx-text-fill: white; -fx-background-color: tranceparent;" />
+      <ComboBox fx:id="clrCmbBx" disable="true" layoutX="591.0" layoutY="116.0" onAction="#clrComOnAction" prefHeight="40.0" prefWidth="193.0" style="-fx-text-fill: white; -fx-background-color: tranceparent;" />
+      <Text fx:id="orderS_Txt" fill="WHITE" layoutX="317.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="137.863525390625">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="orderM_Txt" fill="WHITE" layoutX="488.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="137.863525390625">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="orderL_Txt" fill="WHITE" layoutX="664.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="137.863525390625">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="orderXL_Txt" fill="WHITE" layoutX="838.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="137.863525390625">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="orderXXL_Txt" fill="WHITE" layoutX="1018.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="137.863525390625">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="finishedXXL_Txt" fill="WHITE" layoutX="1017.0" layoutY="333.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="137.863525390625">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="reqXXL_Txt" fill="WHITE" layoutX="1018.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="137.863525390625">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="exXXL_Txt" fill="WHITE" layoutX="1018.0" layoutY="453.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="137.863525390625">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="exXL_Txt" fill="WHITE" layoutX="837.0" layoutY="453.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="137.863525390625">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="reqXL_Txt" fill="WHITE" layoutX="839.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="137.863525390625">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="finishedXL_Txt" fill="WHITE" layoutX="838.0" layoutY="334.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="137.863525390625">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="finishedL_Txt" fill="WHITE" layoutX="665.0" layoutY="334.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="137.863525390625">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="reqL_Txt" fill="WHITE" layoutX="666.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="137.863525390625">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="exL_Txt" fill="WHITE" layoutX="663.0" layoutY="452.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="137.863525390625">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="exM_Txt" fill="WHITE" layoutX="487.0" layoutY="453.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="137.863525390625">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="reqM_Txt" fill="WHITE" layoutX="488.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="137.863525390625">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="finishedM_Txt" fill="WHITE" layoutX="488.0" layoutY="333.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="137.863525390625">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="finishedS_Txt" fill="WHITE" layoutX="316.0" layoutY="334.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="137.863525390625">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="reqS_Txt" fill="WHITE" layoutX="314.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="137.863525390625">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="exS_Txt" fill="WHITE" layoutX="314.0" layoutY="452.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="137.863525390625">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Button layoutX="510.0" layoutY="114.0" mnemonicParsing="false" onAction="#deleteBtnOnAction" styleClass="bkBtn" stylesheets="@../style/dashboardStyle.css">
+         <graphic>
+            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/logo/trachLogo.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="987.0" layoutY="569.0" mnemonicParsing="false" onAction="#shipBtnOnAction" prefHeight="44.0" prefWidth="200.0" styleClass="btn" stylesheets="@../style/loginStyle.css" text="Ship" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

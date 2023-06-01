@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="pane" prefHeight="672.0" prefWidth="1295.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.project_dkf.controller.MaterialInputFormController">
+   <children>
+      <ImageView fitHeight="672.0" fitWidth="1295.0" layoutX="255.0" layoutY="186.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../img/materials.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="-64.0" layoutY="527.0" mnemonicParsing="false" onAction="#cutInBtnOnAction" prefHeight="67.0" prefWidth="224.0" rotate="270.0" styleClass="signBtn" stylesheets="@../style/loginStyle.css" text="CUT" AnchorPane.bottomAnchor="198.0" AnchorPane.leftAnchor="-63.0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+      <Button layoutX="-64.0" layoutY="302.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="224.0" rotate="270.0" style="-fx-background-color: TRANCEPARENT; -fx-text-fill: white;" text="MATERIALS" AnchorPane.bottomAnchor="399.0" AnchorPane.leftAnchor="-63.0" AnchorPane.topAnchor="205.0">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Button>
+      <ComboBox fx:id="orderIdCmbBox" layoutX="187.0" layoutY="117.0" onAction="#orderIdOnAction" prefHeight="40.0" prefWidth="301.0" style="-fx-text-fill: white; -fx-background-color: tranceparent;" />
+      <Text fx:id="dateTxt" fill="WHITE" layoutX="664.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="229.37973022460938">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="typeCmbBx1" layoutX="187.0" layoutY="238.0" prefHeight="40.0" prefWidth="301.0" style="-fx-text-fill: white; -fx-background-color: tranceparent;" />
+      <TextField fx:id="qtyTxt" layoutX="619.0" layoutY="238.0" prefHeight="40.0" prefWidth="193.0" style="-fx-background-color: tranceparent; -fx-text-fill: #FFFF;">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <TableView fx:id="tblMetarial" layoutX="297.0" layoutY="317.0" prefHeight="248.0" prefWidth="778.0">
+         <columns>
+            <TableColumn fx:id="dateColm" prefWidth="173.0" text="Date" />
+            <TableColumn fx:id="timeColm" prefWidth="219.0" text="Time" />
+            <TableColumn fx:id="orderColm" prefWidth="167.0" text="Material ID" />
+            <TableColumn fx:id="qtyColm" prefWidth="219.0" text="Qty" />
+         </columns>
+      </TableView>
+      <Button layoutX="779.0" layoutY="602.0" mnemonicParsing="false" onAction="#deleteBtnOnAction" prefHeight="44.0" prefWidth="200.0" styleClass="btn" stylesheets="@../style/loginStyle.css" text="Delete" textFill="WHITE" AnchorPane.bottomAnchor="25.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button layoutX="1012.0" layoutY="602.0" mnemonicParsing="false" onAction="#addBtnOnAction" prefHeight="44.0" prefWidth="200.0" styleClass="btn" stylesheets="@../style/loginStyle.css" text="Add" textFill="WHITE" AnchorPane.bottomAnchor="25.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Label fx:id="timeLbl" layoutX="664.0" layoutY="144.0" text="Label" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

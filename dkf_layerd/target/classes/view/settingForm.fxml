@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="midleStage" prefHeight="672.0" prefWidth="1295.0" style="-fx-background-color: tranceparent;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.project_dkf.controller.SettingFormController">
+   <children>
+      <ImageView fitHeight="672.0" fitWidth="1295.0" layoutX="324.0" layoutY="182.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../img/profile.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="eMailTxt" layoutX="183.0" layoutY="206.0" onAction="#eMailTxtOnAction" prefHeight="40.0" prefWidth="355.0" styleClass="textBox" stylesheets="@../style/loginStyle.css" AnchorPane.leftAnchor="182.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="editprofileContactTxt" layoutX="182.0" layoutY="324.0" onAction="#editprofileContactTxtOnAction" prefHeight="40.0" prefWidth="355.0" styleClass="textBox" stylesheets="@../style/loginStyle.css" AnchorPane.leftAnchor="182.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="addresseditProfileTxt" layoutX="182.0" layoutY="444.0" onAction="#addresseditProfileTxtOnAction" prefHeight="40.0" prefWidth="355.0" styleClass="textBox" stylesheets="@../style/loginStyle.css" AnchorPane.leftAnchor="182.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <Text fx:id="usrtxtField" fill="WHITE" layoutX="275.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="255.37973022460938">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Button fx:id="updateProfileBtn" layoutX="368.0" layoutY="572.0" mnemonicParsing="false" onAction="#updateProfileBtnOnAction" prefHeight="44.0" prefWidth="200.0" styleClass="btn" stylesheets="@../style/loginStyle.css" text="Update Profile" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button layoutX="-24.0" layoutY="183.0" mnemonicParsing="false" rotate="270.0" style="-fx-background-color: tranceparant; -fx-text-fill: white;" text="PROFILE" AnchorPane.leftAnchor="-24.0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+      <Button layoutX="-53.0" layoutY="422.0" mnemonicParsing="false" onAction="#passwordBtnOnAction" rotate="270.0" styleClass="signBtn" stylesheets="@../style/loginStyle.css" text="PASSWORD" AnchorPane.leftAnchor="-53.0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+      <TableView fx:id="logHistoryTbl" layoutX="625.0" layoutY="146.0" prefHeight="357.0" prefWidth="630.0">
+         <columns>
+            <TableColumn fx:id="colName" minWidth="7.0" prefWidth="157.00982666015625" text="Name" />
+            <TableColumn fx:id="logInTimeClm" minWidth="7.0" prefWidth="233.0137939453125" text="Log-In" />
+            <TableColumn fx:id="logOutTimeClm" minWidth="7.0" prefWidth="236.0118408203125" text="Log-Out" />
+         </columns>
+      </TableView>
+      <Button layoutX="1164.0" layoutY="70.0" mnemonicParsing="false" onAction="#printBtnOnAction" prefHeight="44.0" prefWidth="91.0" styleClass="btn" stylesheets="@../style/loginStyle.css" text="Print" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
