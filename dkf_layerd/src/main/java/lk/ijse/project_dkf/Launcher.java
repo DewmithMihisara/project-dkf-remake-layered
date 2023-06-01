@@ -38,7 +38,6 @@ public class Launcher extends Application {
                 }
             }
         });
-
         stage.show();
     }
 }
