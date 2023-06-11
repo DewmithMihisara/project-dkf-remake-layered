@@ -3,6 +3,7 @@ package lk.ijse.project_dkf.dao.custom.impl;
 import lk.ijse.project_dkf.dao.custom.OrdersDAO;
 import lk.ijse.project_dkf.dto.BuyerDTO;
 import lk.ijse.project_dkf.dto.OrderDTO;
+import lk.ijse.project_dkf.entity.Order;
 import lk.ijse.project_dkf.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -22,35 +23,35 @@ public class OrdersDAOImpl implements OrdersDAO {
         }
         return data;
     }
-    public boolean add(OrderDTO orderDTO) throws SQLException {
+    public boolean add(Order order) throws SQLException {
         String sql ="INSERT INTO Orders (OrderID,BuyerID,Dedline,TtlQty,DailyOutQty,PayTerm,OrderDate ) VALUES(?, ?, ?, ?, ?, ?, ?)";
         return CrudUtil.execute(
                 sql,
-                orderDTO.getOrderId(),
-                orderDTO.getCompId(),
-                orderDTO.getDline(),
-                orderDTO.getTtlQty(),
-                orderDTO.getDailyOut(),
-                orderDTO.getPayment(),
-                orderDTO.getOrderDate()
+                order.getOrderID(),
+                order.getBuyerID(),
+                order.getDeadline(),
+                order.getTtlQty(),
+                order.getDailyOutQty(),
+                order.getPayTerm(),
+                order.getOrderDate()
         );
     }
 
     @Override
-    public List<OrderDTO> getAll() throws SQLException {
+    public List<Order> getAll() throws SQLException {
         return null;
     }
 
     @Override
-    public List<OrderDTO> getAll(String s) throws SQLException {
+    public List<Order> getAll(String s) throws SQLException {
         return null;
     }
 
-    public boolean delete(OrderDTO orderDTO) throws SQLException {
+    public boolean delete(Order order) throws SQLException {
         String sql="DELETE FROM Orders WHERE OrderID=? ";
         boolean result = CrudUtil.execute(
                 sql,
-                orderDTO.getOrderId()
+                order.getOrderID()
         );
         return result;
     }

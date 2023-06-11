@@ -1,6 +1,7 @@
 package lk.ijse.project_dkf.bo.custom.impl;
 
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableListBase;
 import lk.ijse.project_dkf.bo.custom.ShippingBO;
 import lk.ijse.project_dkf.dao.DAOFactory;
 import lk.ijse.project_dkf.dao.custom.OrderRatioDAO;
@@ -15,9 +16,11 @@ import lk.ijse.project_dkf.db.DBConnection;
 import lk.ijse.project_dkf.dto.BuyerDTO;
 import lk.ijse.project_dkf.dto.ShipmentDTO;
 import lk.ijse.project_dkf.dto.StockDTO;
+import lk.ijse.project_dkf.entity.Shipment;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShippingBOImpl implements ShippingBO {
@@ -39,7 +42,11 @@ public class ShippingBOImpl implements ShippingBO {
     }
 
     public boolean add(ObservableList<ShipmentDTO> shipmentDTOS) throws SQLException {
-        return shipmentDAO.add(shipmentDTOS);
+        List<Shipment>shipments=new ArrayList<>();
+        for (ShipmentDTO s: shipmentDTOS){
+            shipments.add(new Shipment(s.getOid(),s.getBuyerName(),s.getBuyerAddress(),s.getClid(),s.getSize(),s.getQty(),s.getDate(),s.getDesc()));
+        }
+        return shipmentDAO.add(shipments);
     }
 
     public List<String> loadClothId(String id) throws SQLException {

@@ -105,7 +105,7 @@ public class CutInputFormController implements Initializable {
         CutTM cutTM = cutTbl.getSelectionModel().getSelectedItem();
         String string=cutTM.getClothID() +" is delete";
         try {
-            boolean delete = cutBO.delete(new CutDTO(cutTM.getClothID(),orderIdCmbBox.getSelectionModel().getSelectedItem(),cutTM.getDate(),cutTM.getTime(),cutTM.getType(),cutTM.getSize()));
+            boolean delete = cutBO.delete(new CutDTO(cutTM.getClothID(),orderIdCmbBox.getSelectionModel().getSelectedItem(), (Date) cutTM.getDate(),cutTM.getTime(),cutTM.getType(),cutTM.getSize()));
             if (delete) {
                 PopUps.popUps(AlertTypes.CONFORMATION, "CutDTO Added" ,string);
             }

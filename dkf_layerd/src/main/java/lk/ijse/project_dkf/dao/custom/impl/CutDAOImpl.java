@@ -2,6 +2,8 @@ package lk.ijse.project_dkf.dao.custom.impl;
 
 import lk.ijse.project_dkf.dao.custom.CutDAO;
 import lk.ijse.project_dkf.dto.CutDTO;
+import lk.ijse.project_dkf.entity.Buyer;
+import lk.ijse.project_dkf.entity.Cut;
 import lk.ijse.project_dkf.tm.CutTM;
 import lk.ijse.project_dkf.util.CrudUtil;
 
@@ -13,53 +15,54 @@ import java.util.Date;
 import java.util.List;
 
 public class CutDAOImpl implements CutDAO {
-    public List<CutDTO> getAll(String id) throws SQLException {
+    public List<Cut> getAll(String id) throws SQLException {
         String sql = "SELECT * FROM CutDTO WHERE OrderId =?";
         ResultSet resultSet = CrudUtil.execute(sql,id);
 
-        ArrayList<CutDTO> cutDTOS =new ArrayList<>();
+        ArrayList<Cut> cuts =new ArrayList<>();
         while (resultSet.next()){
-            String cutID = resultSet.getString(1);
-            String clId=resultSet.getString(2);
-            Date date=resultSet.getDate(3);
-            Time time=resultSet.getTime(4);
-            int qty=resultSet.getInt(5);
-            String type= resultSet.getString(6);
-            String size=resultSet.getString(7);
+            cuts.add(new Cut(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getDate(3),
+                    resultSet.getTime(4),
+                    resultSet.getString(5),
+                    resultSet.getString(6),
+                    resultSet.getString(7)
 
-            CutDTO cutDTO =new CutDTO(cutID, clId, date, time, qty, type, size);
-            cutDTOS.add(cutDTO);
+            ));
         }
-        return cutDTOS;
+        return cuts;
     }
 
     @Override
-    public List<CutDTO> getAll() throws SQLException {
+    public List<Cut> getAll() throws SQLException {
         return null;
     }
 
-    public boolean add(CutDTO cutDTO) throws SQLException {
+    public boolean add(Cut cut) throws SQLException {
         String sql ="INSERT INTO CutDTO (OrderId, ClotheID, Date, Time, CutQty, Type, Size ) VALUES(?, ?, ?, ?, ?, ?, ?)";
         return CrudUtil.execute(
                 sql,
-                cutDTO.getCutID(),
-                cutDTO.getClothId(),
-                cutDTO.getDate(),
-                cutDTO.getTime(),
-                cutDTO.getCutQty(),
-                cutDTO.getType(),
-                cutDTO.getSize()
+                cut.getOrderID(),
+                cut.getClotheID(),
+                cut.getDate(),
+                cut.getTime(),
+                cut.getCutQty(),
+                cut.getType(),
+                cut.getSize()
         );
     }
 
-    public boolean delete(CutDTO cutDTO) throws SQLException {
+    public boolean delete(Cut cut) throws SQLException {
         String sql="DELETE FROM CutDTO WHERE OrderId=? AND ClotheId=? AND Date=? AND Time=?";
         boolean result = CrudUtil.execute(
                 sql,
-                cutDTO.getOrderId(),
-                cutDTO.getClothId(),
-                cutDTO.getDate(),
-                cutDTO.getTime()
+                cut.getOrderID(),
+                cut.getClotheID(),
+                cut.getDate(),
+                cut.getTime()
+
         );
         return result;
     }

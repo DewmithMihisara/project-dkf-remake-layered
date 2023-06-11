@@ -6,8 +6,11 @@ import lk.ijse.project_dkf.dao.custom.LogHistoryDAO;
 import lk.ijse.project_dkf.dao.custom.UserDAO;
 import lk.ijse.project_dkf.dto.LogHistoryDTO;
 import lk.ijse.project_dkf.dto.UserDTO;
+import lk.ijse.project_dkf.entity.LogHistory;
+import lk.ijse.project_dkf.entity.User;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SettingsBOImpl implements SettingsBO {
@@ -17,9 +20,14 @@ public class SettingsBOImpl implements SettingsBO {
         return logHistoryDAO.isHave();
     }
     public boolean update(UserDTO userDTO) throws SQLException {
-        return userDAO.update(userDTO);
+        return userDAO.update(new User(userDTO.getUserName(),userDTO.getPassword(),userDTO.getUserEmail(),userDTO.getContact(),userDTO.getAddress(),userDTO.getPosition()));
     }
     public List<LogHistoryDTO> getAll() throws SQLException {
-        return logHistoryDAO.getAll();
+        List<LogHistory>logHistories= logHistoryDAO.getAll();
+        List<LogHistoryDTO>logHistoryDTOS=new ArrayList<>();
+        for (LogHistory lh : logHistories){
+            logHistoryDTOS.add(new LogHistoryDTO(lh.getUserName(),lh.getLogIn(),lh.getLogOut()));
+        }
+        return logHistoryDTOS;
     }
 }

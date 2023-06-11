@@ -128,7 +128,7 @@ public class OutputFormController implements Initializable {
         try {
             boolean delete = outputBO.delete(new OutputDTO(
                     orderIdCmbBox.getSelectionModel().getSelectedItem(),
-                    output.getDate(),
+                    (Date) output.getDate(),
                     output.getTime(),
                     output.getClId(),
                     output.getSize(),

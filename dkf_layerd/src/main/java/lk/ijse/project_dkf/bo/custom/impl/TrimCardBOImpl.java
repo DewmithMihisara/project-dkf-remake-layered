@@ -13,6 +13,8 @@ import lk.ijse.project_dkf.dao.custom.OrdersDAO;
 import lk.ijse.project_dkf.dao.custom.TrimCardDAO;
 import lk.ijse.project_dkf.dao.custom.impl.TrimCardDAOImpl;
 import lk.ijse.project_dkf.db.DBConnection;
+import lk.ijse.project_dkf.dto.OrderDTO;
+import lk.ijse.project_dkf.entity.Order;
 import lk.ijse.project_dkf.tm.TrimCardTM;
 
 import java.sql.Connection;
@@ -33,8 +35,8 @@ public class TrimCardBOImpl implements TrimCardBO {
         try {
             con = DBConnection.getInstance().getConnection();
             con.setAutoCommit(false);
-
-            boolean isOrderSaved = ordersDAO.add(NewOrderFormController.orderDTO);
+            OrderDTO oDTO=NewOrderFormController.orderDTO;
+            boolean isOrderSaved = ordersDAO.add(new Order(oDTO.getOrderId(),oDTO.getCompId(),oDTO.getDline(),oDTO.getTtlQty(),oDTO.getDailyOut(),oDTO.getPayment(),oDTO.getOrderDate()));
             if (isOrderSaved) {
                 boolean isOrderRatioSaved = orderRatioDAO.addRatio(OrderRatioController.orderRatioTM, NewOrderFormController.orderDTO.getOrderId());
                 if (isOrderRatioSaved) {

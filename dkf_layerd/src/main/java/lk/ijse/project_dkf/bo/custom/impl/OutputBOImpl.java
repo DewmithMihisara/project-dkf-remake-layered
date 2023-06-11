@@ -9,8 +9,10 @@ import lk.ijse.project_dkf.dao.custom.impl.OrderRatioDAOImpl;
 import lk.ijse.project_dkf.dao.custom.impl.OrdersDAOImpl;
 import lk.ijse.project_dkf.dao.custom.impl.OutputDAOImpl;
 import lk.ijse.project_dkf.dto.OutputDTO;
+import lk.ijse.project_dkf.entity.Output;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OutputBOImpl implements OutputBO {
@@ -18,15 +20,20 @@ public class OutputBOImpl implements OutputBO {
     OrderRatioDAO orderRatioDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOType.ORDER_RATIO);
     OrdersDAO ordersDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOType.ORDERS);
     public boolean add(OutputDTO outputDTO) throws SQLException {
-        return outputDAO.add(outputDTO);
+        return outputDAO.add(new Output(outputDTO.getOId(),outputDTO.getDate(),outputDTO.getTime(),outputDTO.getClId(),outputDTO.getSize(),outputDTO.getOut()));
     }
 
     public List<OutputDTO> getAll(String ids) throws SQLException {
-        return outputDAO.getAll(ids);
+        List<Output>outputs=outputDAO.getAll(ids);
+        List<OutputDTO>outputDTOS=new ArrayList<>();
+        for (Output o:outputs){
+            outputDTOS.add(new OutputDTO(o.getOutputID(),o.getDate(),o.getTime(),o.getClothID(),o.getSize(),o.getDailyOut()));
+        }
+        return outputDTOS;
     }
 
     public boolean delete(OutputDTO outputDTO) throws SQLException {
-        return outputDAO.delete(outputDTO);
+        return outputDAO.delete(new Output(outputDTO.getOId(),outputDTO.getDate(),outputDTO.getTime(),outputDTO.getClId(),outputDTO.getSize(),outputDTO.getOut()));
     }
 
     public List<String> loadClothId(String id) throws SQLException {

@@ -3,7 +3,7 @@ package lk.ijse.project_dkf.dto;
 import lombok.*;
 
 import java.sql.Time;
-import java.util.Date;
+import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

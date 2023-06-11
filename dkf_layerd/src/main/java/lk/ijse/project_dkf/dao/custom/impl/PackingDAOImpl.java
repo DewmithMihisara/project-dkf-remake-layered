@@ -2,6 +2,7 @@ package lk.ijse.project_dkf.dao.custom.impl;
 
 import lk.ijse.project_dkf.dao.custom.PackingDAO;
 import lk.ijse.project_dkf.dto.PackDTO;
+import lk.ijse.project_dkf.entity.Packing;
 import lk.ijse.project_dkf.tm.PackingTM;
 import lk.ijse.project_dkf.util.CrudUtil;
 
@@ -13,49 +14,49 @@ import java.util.Date;
 import java.util.List;
 
 public class PackingDAOImpl implements PackingDAO {
-    public List<PackDTO> getAll(String packId) throws SQLException {
+    public List<Packing> getAll(String packId) throws SQLException {
         String sql = "SELECT * FROM Packing WHERE PackID =?";
         ResultSet resultSet = CrudUtil.execute(sql,packId);
 
-        ArrayList<PackDTO> packDTOS =new ArrayList<>();
+        ArrayList<Packing> packing =new ArrayList<>();
         while (resultSet.next()){
             String id = resultSet.getString(1);
             Date date=resultSet.getDate(2);
             Time time=resultSet.getTime(3);
-            String clr=resultSet.getString(4);
+            String clId=resultSet.getString(4);
             String size=resultSet.getString(5);
             int qty=resultSet.getInt(6);
 
-            PackDTO packDTO =new PackDTO(id, date,time, clr,size, qty);
-            packDTOS.add(packDTO);
+            Packing packing1 =new Packing(id, date,time, clId,size, qty);
+            packing.add(packing1);
         }
-        return packDTOS;
+        return packing;
     }
-    public boolean add(PackDTO packDTO) throws SQLException {
+    public boolean add(Packing packing) throws SQLException {
         String sql ="INSERT INTO Packing (PackID, Date, Time, ClotheID, Size, PackQty ) VALUES(?, ?, ?, ?, ?, ?)";
         return CrudUtil.execute(
                 sql,
-                packDTO.getPackID(),
-                packDTO.getDate(),
-                packDTO.getTime(),
-                packDTO.getClId(),
-                packDTO.getSize(),
-                packDTO.getPackQty()
+                packing.getPackID(),
+                packing.getDate(),
+                packing.getTime(),
+                packing.getClotheID(),
+                packing.getSize(),
+                packing.getPackQty()
         );
     }
 
     @Override
-    public List<PackDTO> getAll() throws SQLException {
+    public List<Packing> getAll() throws SQLException {
         return null;
     }
 
-    public boolean delete(PackDTO packDTO) throws SQLException {
+    public boolean delete(Packing packing) throws SQLException {
         String sql="DELETE FROM Packing WHERE PackID=? AND Date=? AND Time=?";
         boolean result = CrudUtil.execute(
                 sql,
-                packDTO.getPackID(),
-                packDTO.getDate(),
-                packDTO.getTime()
+                packing.getPackID(),
+                packing.getDate(),
+                packing.getTime()
         );
         return result;
     }

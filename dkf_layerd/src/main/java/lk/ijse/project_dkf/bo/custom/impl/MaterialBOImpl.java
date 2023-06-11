@@ -9,8 +9,10 @@ import lk.ijse.project_dkf.dao.custom.impl.MaterialDAOImpl;
 import lk.ijse.project_dkf.dao.custom.impl.OrdersDAOImpl;
 import lk.ijse.project_dkf.dao.custom.impl.TrimCardDAOImpl;
 import lk.ijse.project_dkf.dto.MaterialDTO;
+import lk.ijse.project_dkf.entity.Material;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MaterialBOImpl implements MaterialBO {
@@ -19,13 +21,18 @@ public class MaterialBOImpl implements MaterialBO {
     OrdersDAO ordersDAO=DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOType.ORDERS);
 
     public boolean add(MaterialDTO materialDTO) throws SQLException {
-        return materialDAO.add(materialDTO);
+        return materialDAO.add(new Material(materialDTO.getOrderID(),materialDTO.getMid(),materialDTO.getTime(),materialDTO.getQty(),materialDTO.getDate()));
     }
     public boolean delete(MaterialDTO materialDTO) throws SQLException {
-        return materialDAO.delete(materialDTO);
+        return materialDAO.delete(new Material(materialDTO.getOrderID(),materialDTO.getMid(),materialDTO.getTime(),materialDTO.getQty(),materialDTO.getDate()));
     }
     public List<MaterialDTO> getAll(String id) throws SQLException {
-        return materialDAO.getAll(id);
+        List<Material>materials=materialDAO.getAll(id);
+        List<MaterialDTO>materialDTOS=new ArrayList<>();
+        for (Material m: materials){
+            materialDTOS.add(new MaterialDTO(m.getOrderID(),m.getMatID(),m.getTime(),m.getMaterialQty(),m.getDate()));
+        }
+        return materialDTOS;
     }
     public List<String> loadMaterialId(String id) throws SQLException {
         return trimCardDAO.loadMaterialId(id);
