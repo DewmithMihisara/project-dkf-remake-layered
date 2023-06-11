@@ -10,13 +10,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import lk.ijse.project_dkf.animation.SetTime;
-import lk.ijse.project_dkf.animation.ShakeTextAnimation;
-import lk.ijse.project_dkf.animation.defueltText;
+import lk.ijse.project_dkf.bo.BOFactory;
+import lk.ijse.project_dkf.bo.custom.PackingBO;
+import lk.ijse.project_dkf.bo.custom.impl.PackingBOImpl;
 import lk.ijse.project_dkf.db.DBConnection;
-import lk.ijse.project_dkf.dto.Pack;
-import lk.ijse.project_dkf.dto.Stock;
-import lk.ijse.project_dkf.dto.tm.PackingTM;
-import lk.ijse.project_dkf.model.*;
+import lk.ijse.project_dkf.dto.PackDTO;
+import lk.ijse.project_dkf.dto.StockDTO;
+import lk.ijse.project_dkf.tm.PackingTM;
 import lk.ijse.project_dkf.notification.PopUps;
 import lk.ijse.project_dkf.util.AlertTypes;
 import lk.ijse.project_dkf.validation.inputsValidation;
@@ -61,6 +61,7 @@ public class PackingFormController implements Initializable {
     @FXML
     private TableView<PackingTM> tblPacking;
     boolean clId,size,qty;
+    PackingBO packingBO= BOFactory.getBoFactory().getBO(BOFactory.BO.PACKING);
 
     {
         clId=false;
@@ -93,7 +94,7 @@ public class PackingFormController implements Initializable {
         clId= inputsValidation.isNullCmb(clrCmbBx);
 
         if (clId && size && qty){
-            Pack pack=new Pack(
+            PackDTO packDTO =new PackDTO(
                     orderIdCmbBox.getSelectionModel().getSelectedItem(),
                     Date.valueOf(dateTxt.getText()),
                     Time.valueOf(timeLbl.getText()),
@@ -101,16 +102,16 @@ public class PackingFormController implements Initializable {
                     sizeCmbBx.getSelectionModel().getSelectedItem(),
                     Integer.parseInt(qtyTxt.getText())
             );
-            Stock stock =new Stock(
+            StockDTO stockDTO =new StockDTO(
                     clrCmbBx.getSelectionModel().getSelectedItem(),
                     orderIdCmbBox.getSelectionModel().getSelectedItem(),
                     sizeCmbBx.getSelectionModel().getSelectedItem(),
                     Integer.parseInt(qtyTxt.getText())
             );
             try {
-                boolean affectedRows= StockPlaceModel.add(pack,stock);
+                boolean affectedRows= packingBO.stockAdd(packDTO, stockDTO);
                 if (affectedRows){
-                    PopUps.popUps(AlertTypes.CONFORMATION, "Pack add", "Packing details is add properly.");
+                    PopUps.popUps(AlertTypes.CONFORMATION, "PackDTO add", "Packing details is add properly.");
                 }
             } catch (SQLException e) {
                 PopUps.popUps(AlertTypes.WARNING, "SQL Warning", "Database error when add packing.");
@@ -125,10 +126,18 @@ public class PackingFormController implements Initializable {
     @FXML
     void deleteBtnOnAction(ActionEvent event) {
         PackingTM packingTM = tblPacking.getSelectionModel().getSelectedItem();
+        PackDTO packDTO=new PackDTO(
+                orderIdCmbBox.getSelectionModel().getSelectedItem(),
+                packingTM.getDate(),
+                packingTM.getTime(),
+                packingTM.getClId(),
+                packingTM.getSize(),
+                packingTM.getQty()
+        );
         try {
-            boolean delete=PackingModel.delete(packingTM, orderIdCmbBox.getSelectionModel().getSelectedItem());
+            boolean delete= packingBO.delete(packDTO);
             if (delete){
-                PopUps.popUps(AlertTypes.CONFORMATION, "Pack Delete", "Packing details is delete properly.");
+                PopUps.popUps(AlertTypes.CONFORMATION, "PackDTO Delete", "Packing details is delete properly.");
             }
 
         } catch (SQLException e) {
@@ -149,7 +158,7 @@ public class PackingFormController implements Initializable {
         ObservableList<String> obList = FXCollections.observableArrayList();
         List<String> ids = null;
         try {
-            ids = IdModel.loadClothId(orderIdCmbBox.getSelectionModel().getSelectedItem());
+            ids = packingBO.loadClothId(orderIdCmbBox.getSelectionModel().getSelectedItem());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -185,7 +194,7 @@ public class PackingFormController implements Initializable {
         ObservableList<String> obList = FXCollections.observableArrayList();
         List<String> ids = null;
         try {
-            ids = IdModel.loadOrderIds();
+            ids = packingBO.loadOrderIds();
         } catch (SQLException e) {}
 
         for (String id : ids) {
@@ -196,14 +205,14 @@ public class PackingFormController implements Initializable {
     private void loadValues(String id) {
         ObservableList<PackingTM> packingTMS = FXCollections.observableArrayList();
         try {
-            List<Pack> all = PackingModel.getAll(id);
-            for (Pack pack: all){
+            List<PackDTO> all = packingBO.getAll(id);
+            for (PackDTO packDTO : all){
                 packingTMS.add(new PackingTM(
-                        pack.getDate(),
-                        pack.getTime(),
-                        pack.getClId(),
-                        pack.getSize(),
-                        pack.getPackQty()
+                        packDTO.getDate(),
+                        packDTO.getTime(),
+                        packDTO.getClId(),
+                        packDTO.getSize(),
+                        packDTO.getPackQty()
                 ));
             }
             tblPacking.setItems(packingTMS);

@@ -1,20 +1,16 @@
 package lk.ijse.project_dkf.controller;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import lk.ijse.project_dkf.animation.ShakeTextAnimation;
-import lk.ijse.project_dkf.dto.LogHistory;
-import lk.ijse.project_dkf.dto.User;
-import lk.ijse.project_dkf.model.LogInModel;
+import lk.ijse.project_dkf.bo.BOFactory;
+import lk.ijse.project_dkf.bo.custom.LogInBO;
+import lk.ijse.project_dkf.dto.LogHistoryDTO;
+import lk.ijse.project_dkf.dto.UserDTO;
+import lk.ijse.project_dkf.bo.custom.impl.LogInBOImpl;
 import lk.ijse.project_dkf.notification.PopUps;
 import lk.ijse.project_dkf.util.AlertTypes;
 import lk.ijse.project_dkf.util.Navigation;
@@ -23,7 +19,6 @@ import lk.ijse.project_dkf.validation.inputsValidation;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class LogInFormController {
@@ -40,24 +35,25 @@ public class LogInFormController {
     @FXML
     private TextField usrTxt;
 
-    public static User user;
-    public static LogHistory logHistory;
+    public static UserDTO userDTO;
+    public static LogHistoryDTO logHistoryDTO;
     public static String usrName;
     boolean uName,pw;
+    LogInBO logInBO= BOFactory.getBoFactory().getBO(BOFactory.BO.LOG_IN);
     @FXML
     void frgtPwBtnOnActon(ActionEvent event) throws IOException {
         uName=inputsValidation.isNullTxt(usrTxt);
         try {
-            boolean isUsr=LogInModel.isCorrextusr(usrTxt.getText());
-            if (isUsr){
+            UserDTO isUsr= logInBO.isCorrect(usrTxt.getText());
+            if (isUsr.getUserName() != null){
                 usrName=usrTxt.getText();
                 Navigation.navigation(Rout.FORGOT_PASS,root);
             }else {
-                PopUps.popUps(AlertTypes.ERROR,"User Name","Input user name is wrong.\n Try with correct one.");
+                PopUps.popUps(AlertTypes.ERROR,"UserDTO Name","Input userDTO name is wrong.\n Try with correct one.");
                 ShakeTextAnimation.ShakeText(usrTxt);
             }
         } catch (SQLException e) {
-            PopUps.popUps(AlertTypes.WARNING,"SQL Warning","Database error when search user.");
+            PopUps.popUps(AlertTypes.WARNING,"SQL Warning","Database error when search userDTO.");
         }
     }
 
@@ -68,20 +64,24 @@ public class LogInFormController {
 
         if (pw && uName){
             try {
-                user = LogInModel.isCorrect(usrTxt.getText());
-                if (user.getPassword().equals(pwTxt.getText())) {
+                userDTO = logInBO.isCorrect(usrTxt.getText());
+                if (userDTO==null){
+                    System.out.println("hello");
+                }
+                if (userDTO.getPassword().equals(pwTxt.getText())) {
                     Navigation.navigation(Rout.MAIN_DASHBOARD, root);
-                    logHistory=new LogHistory();
-                    logHistory.setUsrName(usrTxt.getText());
-                    logHistory.setLogIn(LocalDateTime.now());
+                    logHistoryDTO =new LogHistoryDTO();
+                    logHistoryDTO.setUsrName(usrTxt.getText());
+                    logHistoryDTO.setLogIn(LocalDateTime.now());
                 } else {
                     PopUps.popUps(AlertTypes.ERROR, "Password is Wrong", "Your password is wrong. Try again");
                     pwTxt.clear();
                 }
             } catch (Exception e) {
-                PopUps.popUps(AlertTypes.ERROR, "User-name is Wrong", "Your user-name is wrong. Try again");
+                PopUps.popUps(AlertTypes.ERROR, "User name is Wrong", "Your userDTO-name is wrong. Try again");
                 usrTxt.clear();
                 pwTxt.clear();
+                e.printStackTrace();
             }
         }
     }

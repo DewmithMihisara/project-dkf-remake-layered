@@ -66,32 +66,32 @@
 	<field name="OutputID" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="OutputID"/>
 		<property name="com.jaspersoft.studio.field.label" value="OutputID"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="output"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="outputDTO"/>
 	</field>
 	<field name="Day" class="java.sql.Date">
 		<property name="com.jaspersoft.studio.field.name" value="Day"/>
 		<property name="com.jaspersoft.studio.field.label" value="Day"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="output"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="outputDTO"/>
 	</field>
 	<field name="Time" class="java.sql.Time">
 		<property name="com.jaspersoft.studio.field.name" value="Time"/>
 		<property name="com.jaspersoft.studio.field.label" value="Time"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="output"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="outputDTO"/>
 	</field>
 	<field name="ClotheId" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="ClotheId"/>
 		<property name="com.jaspersoft.studio.field.label" value="ClotheId"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="output"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="outputDTO"/>
 	</field>
 	<field name="size" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="size"/>
 		<property name="com.jaspersoft.studio.field.label" value="size"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="output"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="outputDTO"/>
 	</field>
 	<field name="DailyOut" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="DailyOut"/>
 		<property name="com.jaspersoft.studio.field.label" value="DailyOut"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="output"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="outputDTO"/>
 	</field>
 	<title>
 		<band height="201" splitType="Stretch">

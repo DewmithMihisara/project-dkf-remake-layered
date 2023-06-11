@@ -6,18 +6,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import lk.ijse.project_dkf.bo.custom.LogInBO;
+import lk.ijse.project_dkf.bo.custom.impl.LogInBOImpl;
 import lk.ijse.project_dkf.controller.LogInFormController;
-import lk.ijse.project_dkf.model.LogHistoryModel;
-import lk.ijse.project_dkf.util.Gmail;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 public class Launcher extends Application {
+    LogInBO logInBO=new LogInBOImpl();
     @Override
     public void start(Stage stage) throws Exception {
         Parent parent= FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/logInForm.fxml")));
@@ -29,10 +27,10 @@ public class Launcher extends Application {
         stage.centerOnScreen();
 
         stage.setOnCloseRequest(we->{
-            if(LogInFormController.logHistory!=null){
-                LogInFormController.logHistory.setLogOut(LocalDateTime.now());
+            if(LogInFormController.logHistoryDTO !=null){
+                LogInFormController.logHistoryDTO.setLogOut(LocalDateTime.now());
                 try {
-                    LogHistoryModel.save(LogInFormController.logHistory);
+                    logInBO.save(LogInFormController.logHistoryDTO);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

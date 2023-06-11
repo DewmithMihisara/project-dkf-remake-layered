@@ -10,15 +10,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import lk.ijse.project_dkf.animation.SetTime;
-import lk.ijse.project_dkf.dto.Cut;
-import lk.ijse.project_dkf.dto.Material;
-import lk.ijse.project_dkf.dto.Output;
-import lk.ijse.project_dkf.dto.tm.CutTM;
-import lk.ijse.project_dkf.dto.tm.MaterialTM;
-import lk.ijse.project_dkf.model.CutModel;
-import lk.ijse.project_dkf.model.IdModel;
-import lk.ijse.project_dkf.model.MaterialModel;
-import lk.ijse.project_dkf.model.OutputModel;
+import lk.ijse.project_dkf.bo.BOFactory;
+import lk.ijse.project_dkf.bo.custom.MaterialBO;
+import lk.ijse.project_dkf.dto.MaterialDTO;
+import lk.ijse.project_dkf.tm.MaterialTM;
+import lk.ijse.project_dkf.bo.custom.impl.MaterialBOImpl;
 import lk.ijse.project_dkf.notification.PopUps;
 import lk.ijse.project_dkf.util.AlertTypes;
 import lk.ijse.project_dkf.util.Navigation;
@@ -31,7 +27,6 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -59,6 +54,7 @@ public class MaterialInputFormController implements Initializable {
     @FXML
     private ComboBox<String> typeCmbBx1;
     boolean mid, qty;
+    MaterialBO materialBO= BOFactory.getBoFactory().getBO(BOFactory.BO.MATERIAL);
 
     {
         mid = false;
@@ -70,18 +66,18 @@ public class MaterialInputFormController implements Initializable {
         qty = inputsValidation.isNumberOrNull(qtyTxt);
 
         if (mid && qty) {
-            Material material = new Material(
+            MaterialDTO materialDTO = new MaterialDTO(
                     orderIdCmbBox.getSelectionModel().getSelectedItem(),
                     typeCmbBx1.getSelectionModel().getSelectedItem(),
                     Time.valueOf(timeLbl.getText()),
                     Integer.parseInt(qtyTxt.getText()),
                     Date.valueOf(dateTxt.getText())
             );
-            String string= "Cut added of order "+material.getOrderID();
+            String string= "CutDTO added of orderDTO "+ materialDTO.getOrderID();
             try {
-                boolean affectedRows = MaterialModel.add(material);
+                boolean affectedRows = materialBO.add(materialDTO);
                 if (affectedRows) {
-                    PopUps.popUps(AlertTypes.CONFORMATION, "Cut Added" ,string);
+                    PopUps.popUps(AlertTypes.CONFORMATION, "CutDTO Added" ,string);
                 }
             } catch (SQLException e) {
                 PopUps.popUps(AlertTypes.WARNING, "SQL Warning", "Database error when add cut.");
@@ -95,9 +91,15 @@ public class MaterialInputFormController implements Initializable {
     void deleteBtnOnAction(ActionEvent event) {
         MaterialTM materialTM = tblMetarial.getSelectionModel().getSelectedItem();
         try {
-            boolean delete = MaterialModel.delete(materialTM, orderIdCmbBox.getSelectionModel().getSelectedItem());
+            boolean delete = materialBO.delete(new MaterialDTO(
+                    orderIdCmbBox.getSelectionModel().getSelectedItem(),
+                    materialTM.getOid(),
+                    materialTM.getTime(),
+                    materialTM.getQty(),
+                    materialTM.getDate())
+            );
             if (delete) {
-                PopUps.popUps(AlertTypes.CONFORMATION, "Cut Delete" ,"Cut is deleted.");
+                PopUps.popUps(AlertTypes.CONFORMATION, "CutDTO Delete" ,"CutDTO is deleted.");
             }
 
         } catch (SQLException e) {
@@ -119,7 +121,7 @@ public class MaterialInputFormController implements Initializable {
         ObservableList<String> obList = FXCollections.observableArrayList();
         List<String> ids = null;
         try {
-            ids = IdModel.loadMaterialId(orderIdCmbBox.getSelectionModel().getSelectedItem());
+            ids = materialBO.loadMaterialId(orderIdCmbBox.getSelectionModel().getSelectedItem());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -132,13 +134,13 @@ public class MaterialInputFormController implements Initializable {
     private void loadValues(String id) {
         ObservableList<MaterialTM> materialTMS = FXCollections.observableArrayList();
         try {
-            List<Material> all = MaterialModel.getAll(id);
-            for (Material material : all) {
+            List<MaterialDTO> all = materialBO.getAll(id);
+            for (MaterialDTO materialDTO : all) {
                 materialTMS.add(new MaterialTM(
-                        material.getDate(),
-                        material.getTime(),
-                        material.getMid(),
-                        material.getQty()
+                        materialDTO.getDate(),
+                        materialDTO.getTime(),
+                        materialDTO.getMid(),
+                        materialDTO.getQty()
                 ));
             }
             tblMetarial.setItems(materialTMS);
@@ -157,7 +159,7 @@ public class MaterialInputFormController implements Initializable {
         ObservableList<String> obList = FXCollections.observableArrayList();
         List<String> ids = null;
         try {
-            ids = IdModel.loadOrderIds();
+            ids = materialBO.loadOrderIds();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

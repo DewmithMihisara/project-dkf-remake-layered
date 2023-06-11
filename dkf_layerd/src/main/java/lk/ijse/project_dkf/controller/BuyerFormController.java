@@ -6,22 +6,19 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.InputMethodEvent;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import lk.ijse.project_dkf.animation.ShakeTextAnimation;
 import lk.ijse.project_dkf.animation.defueltText;
-import lk.ijse.project_dkf.dto.Buyer;
-import lk.ijse.project_dkf.dto.tm.BuyerTM;
-import lk.ijse.project_dkf.dto.tm.CutTM;
-import lk.ijse.project_dkf.model.BuyerModel;
+import lk.ijse.project_dkf.bo.BOFactory;
+import lk.ijse.project_dkf.bo.custom.BuyerBO;
+import lk.ijse.project_dkf.dto.BuyerDTO;
+import lk.ijse.project_dkf.tm.BuyerTM;
+import lk.ijse.project_dkf.bo.custom.impl.BuyerBOImpl;
 import lk.ijse.project_dkf.notification.PopUps;
 import lk.ijse.project_dkf.util.AlertTypes;
 import lk.ijse.project_dkf.util.Navigation;
 import lk.ijse.project_dkf.util.Rout;
+import lk.ijse.project_dkf.validation.inputsValidation;
 
 import java.io.IOException;
 import java.net.URL;
@@ -54,6 +51,7 @@ public class BuyerFormController implements Initializable {
     @FXML
     private Button addBtn;
     boolean name, address, cuntact;
+    BuyerBO buyerBO= BOFactory.getBoFactory().getBO(BOFactory.BO.BUYER);
 
     {
         name = false;
@@ -74,15 +72,15 @@ public class BuyerFormController implements Initializable {
     }
     @FXML
     void addBtnOnAction(ActionEvent event) throws IOException {
-        name = buyerName();
-        address = address();
-        cuntact = contact();
+        name = inputsValidation.isNullTxt(buyerNameTxt);
+        address = inputsValidation.isNullTxt(buyerAddTxt);
+        cuntact = inputsValidation.isNullTxt(BuyerCnTxt);
 
         if (name && address && cuntact) {
-            Buyer buyer = new Buyer(buyerIdTxt.getText(), buyerNameTxt.getText(), BuyerCnTxt.getText(), buyerAddTxt.getText());
+            BuyerDTO buyerDTO = new BuyerDTO(buyerIdTxt.getText(), buyerNameTxt.getText(), BuyerCnTxt.getText(), buyerAddTxt.getText());
             String text="Buyer "+buyerNameTxt.getText()+" added.";
             try {
-                boolean affectedRows = BuyerModel.addBuyer(buyer);
+                boolean affectedRows = buyerBO.addBuyer(buyerDTO);
                 tblBuyer.refresh();
                 if (affectedRows) {
                     generateOrderID();
@@ -94,6 +92,7 @@ public class BuyerFormController implements Initializable {
                 }
             } catch (SQLException e) {
                 PopUps.popUps(AlertTypes.WARNING, "SQL Warning", "Database error when add buyer.");
+                e.printStackTrace();
             } finally {
                 Navigation.navigation(Rout.BUYER, midleStage);
             }
@@ -102,10 +101,10 @@ public class BuyerFormController implements Initializable {
     }
     @FXML
     void deleteBtnOnAction(ActionEvent event) throws IOException {
-        BuyerTM buyer = (BuyerTM) tblBuyer.getSelectionModel().getSelectedItem();
-        String text="Buyer "+buyer.getName()+" delete.";
+        BuyerTM buyerTM = (BuyerTM) tblBuyer.getSelectionModel().getSelectedItem();
+        String text="Buyer "+buyerTM.getName()+" delete.";
         try {
-            boolean delete = BuyerModel.delete(buyer);
+            boolean delete = buyerBO.deleteBuyer(new BuyerDTO(buyerTM.getId(),buyerTM.getName(),buyerTM.getCn(),buyerTM.getAddress()));
             if (delete) {
                 PopUps.popUps(AlertTypes.CONFORMATION, "Delete Buyer", text);
             }
@@ -130,12 +129,12 @@ public class BuyerFormController implements Initializable {
             addBtn.setDisable(true);
 
         } else if (btnUpdate.getText().equals("Update")) {
-            name = buyerName();
-            address = address();
-            cuntact = contact();
+            name = inputsValidation.isNullTxt(buyerNameTxt);
+            address = inputsValidation.isNullTxt(buyerAddTxt);
+            cuntact = inputsValidation.isNullTxt(BuyerCnTxt);
 
             if (name && address && cuntact) {
-                Buyer buyer = Buyer.builder()
+                BuyerDTO buyerDTO = BuyerDTO.builder()
                         .buyerId(buyerIdTxt.getText())
                         .buyerName(buyerNameTxt.getText())
                         .buyerCn(BuyerCnTxt.getText())
@@ -143,9 +142,9 @@ public class BuyerFormController implements Initializable {
                         .build();
 
                 try {
-                    boolean update = BuyerModel.update(buyer);
+                    boolean update = buyerBO.updateBuyer(buyerDTO);
                     if (update) {
-                        String text="Buyer "+buyer.getBuyerName()+" update";
+                        String text="Buyer "+ buyerDTO.getBuyerName()+" update";
                         PopUps.popUps(AlertTypes.CONFORMATION, "Update Buyer", text);
                     }
                 } catch (SQLException e) {
@@ -167,7 +166,7 @@ public class BuyerFormController implements Initializable {
     }
     private void generateOrderID() {
         try {
-            String id = BuyerModel.getNextOrderID();
+            String id = buyerBO.getNextOrderID();
             buyerIdTxt.setText(id);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -176,13 +175,13 @@ public class BuyerFormController implements Initializable {
     private void setValues() {
         ObservableList<BuyerTM> object = FXCollections.observableArrayList();
         try {
-            List<Buyer> all = BuyerModel.getAll();
-            for (Buyer buyer : all) {
+            List<BuyerDTO> all = buyerBO.getAllBuyers();
+            for (BuyerDTO buyerDTO : all) {
                 object.add(new BuyerTM(
-                        buyer.getBuyerId(),
-                        buyer.getBuyerName(),
-                        buyer.getBuyerCn(),
-                        buyer.getBuyerAddress()
+                        buyerDTO.getBuyerId(),
+                        buyerDTO.getBuyerName(),
+                        buyerDTO.getBuyerCn(),
+                        buyerDTO.getBuyerAddress()
                 ));
             }
             tblBuyer.setItems(object);
@@ -195,35 +194,5 @@ public class BuyerFormController implements Initializable {
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colContact.setCellValueFactory(new PropertyValueFactory<>("cn"));
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
-    }
-    boolean buyerName() {
-        if (buyerNameTxt.getText().matches("^$")) {
-            ShakeTextAnimation.ShakeText(buyerNameTxt);
-        } else {
-            defueltText.Defuelt(buyerNameTxt);
-            return true;
-        }
-        return false;
-    }
-    boolean address() {
-        if (buyerAddTxt.getText().matches("^$")) {
-            ShakeTextAnimation.ShakeText(buyerAddTxt);
-        } else {
-            defueltText.Defuelt(buyerAddTxt);
-            return true;
-        }
-        return false;
-    }
-    boolean contact() {
-        if (BuyerCnTxt.getText().matches("^$")) {
-            ShakeTextAnimation.ShakeText(BuyerCnTxt);
-        }
-        if (BuyerCnTxt.getText().matches("^(\\d+)$")) {
-            defueltText.Defuelt(BuyerCnTxt);
-            return true;
-        } else {
-            ShakeTextAnimation.ShakeText(BuyerCnTxt);
-        }
-        return false;
     }
 }

@@ -1,6 +1,5 @@
 package lk.ijse.project_dkf.controller;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,9 +12,11 @@ import javafx.scene.paint.Color;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Random;
+
 import lk.ijse.project_dkf.animation.ShakeTextAnimation;
-import lk.ijse.project_dkf.model.UserModel;
+import lk.ijse.project_dkf.bo.BOFactory;
+import lk.ijse.project_dkf.bo.custom.PasswordBO;
+import lk.ijse.project_dkf.bo.custom.impl.PasswordBOImpl;
 import lk.ijse.project_dkf.util.Gmail;
 import lk.ijse.project_dkf.util.MailTypes;
 import lk.ijse.project_dkf.util.Navigation;
@@ -44,7 +45,7 @@ public class PasswordFormController implements Initializable {
     private Label nbLbl;
     private boolean pw, cnfPw;
     public static int otpNum;
-
+    PasswordBO passwordBO= BOFactory.getBoFactory().getBO(BOFactory.BO.PASSWORD);
     {
         pw = false;
     }
@@ -60,9 +61,9 @@ public class PasswordFormController implements Initializable {
         if (pw) {
             if (cnfPw && pw) {
                 if (pwTxt.getText().equals(pwConformTxt.getText())) {
-                    NewAcFormController.user.setPassword(pwTxt.getText());
+                    NewAcFormController.userDTO.setPassword(pwTxt.getText());
                     try {
-                        ownerMail= UserModel.getOwnerMail();
+                        ownerMail= passwordBO.getOwnerMail();
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
@@ -129,13 +130,13 @@ public class PasswordFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if (NewAcFormController.user!=null){
+        if (NewAcFormController.userDTO !=null){
             setValues();
         }
     }
 
     private void setValues() {
-        pwTxt.setText(NewAcFormController.user.getPassword());
-        pwConformTxt.setText(NewAcFormController.user.getPassword());
+        pwTxt.setText(NewAcFormController.userDTO.getPassword());
+        pwConformTxt.setText(NewAcFormController.userDTO.getPassword());
     }
 }

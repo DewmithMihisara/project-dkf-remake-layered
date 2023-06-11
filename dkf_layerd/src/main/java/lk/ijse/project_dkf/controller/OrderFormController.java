@@ -5,17 +5,16 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import lk.ijse.project_dkf.dto.Cut;
-import lk.ijse.project_dkf.dto.OrderRatio;
-import lk.ijse.project_dkf.dto.Pack;
-import lk.ijse.project_dkf.dto.tm.CutTM;
-import lk.ijse.project_dkf.dto.tm.PackingTM;
-import lk.ijse.project_dkf.model.*;
+import lk.ijse.project_dkf.bo.BOFactory;
+import lk.ijse.project_dkf.bo.custom.OrderBO;
+import lk.ijse.project_dkf.bo.custom.impl.OrderBOImpl;
+import lk.ijse.project_dkf.dto.OrderDTO;
+import lk.ijse.project_dkf.dto.OrderRatioDTO;
+import lk.ijse.project_dkf.dto.PackDTO;
 import lk.ijse.project_dkf.notification.PopUps;
 import lk.ijse.project_dkf.util.AlertTypes;
 import lk.ijse.project_dkf.util.Navigation;
@@ -73,18 +72,21 @@ public class OrderFormController implements Initializable {
     @FXML
     private Text reqXXL_Txt;
     int s, m, l, xl, xxl;
+    OrderBO orderBO= BOFactory.getBoFactory().getBO(BOFactory.BO.ORDER);
     @FXML
     private AnchorPane root;
     @FXML
     void deleteBtnOnAction(ActionEvent event) {
         try {
-            boolean delete = OrderModel.delete(orderIdCmbBox.getSelectionModel().getSelectedItem());
+            OrderDTO orderDTO=new OrderDTO();
+            orderDTO.setOrderId(orderIdCmbBox.getSelectionModel().getSelectedItem());
+            boolean delete = orderBO.delete(orderDTO);
             if (delete) {
-                PopUps.popUps(AlertTypes.CONFORMATION, "Delete", "This order is deleted.");
+                PopUps.popUps(AlertTypes.CONFORMATION, "Delete", "This orderDTO is deleted.");
             }
 
         } catch (SQLException e) {
-            PopUps.popUps(AlertTypes.WARNING, "SQL Warning", "Database error when delete order.");
+            PopUps.popUps(AlertTypes.WARNING, "SQL Warning", "Database error when delete orderDTO.");
         }finally {
             loadOrderIds();
         }
@@ -102,7 +104,7 @@ public class OrderFormController implements Initializable {
         ObservableList<String> obList = FXCollections.observableArrayList();
         List<String> ids = null;
         try {
-            ids = IdModel.loadClothId(orderIdCmbBox.getSelectionModel().getSelectedItem());
+            ids = orderBO.loadClothId(orderIdCmbBox.getSelectionModel().getSelectedItem());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -123,47 +125,47 @@ public class OrderFormController implements Initializable {
     }
     private void loadReqAndExtra(String oId, String clr) {
         try {
-            OrderRatio orderRatio= LoadSizesModel.ratio(oId,clr);
+            OrderRatioDTO orderRatioDTO = orderBO.ratio(oId,clr);
 
-            if (orderRatio != null && (orderRatio.getSQty()) <= s) {
+            if (orderRatioDTO != null && (orderRatioDTO.getSQty()) <= s) {
                 reqS_Txt.setText("0");
                 reqS_Txt.setFill(Color.GREEN);
-                exS_Txt.setText(String.valueOf(s - orderRatio.getSQty()));
+                exS_Txt.setText(String.valueOf(s - orderRatioDTO.getSQty()));
             }else {
-                assert orderRatio != null;
-                reqS_Txt.setText(String.valueOf(orderRatio.getSQty() - s));
+                assert orderRatioDTO != null;
+                reqS_Txt.setText(String.valueOf(orderRatioDTO.getSQty() - s));
                 exS_Txt.setText("0");
             }
-            if (orderRatio.getMQty() <= m) {
+            if (orderRatioDTO.getMQty() <= m) {
                 reqM_Txt.setText("0");
                 reqM_Txt.setFill(Color.GREEN);
-                exM_Txt.setText(String.valueOf(m - orderRatio.getMQty()));
+                exM_Txt.setText(String.valueOf(m - orderRatioDTO.getMQty()));
             }else {
-                reqM_Txt.setText(String.valueOf(orderRatio.getMQty() - m));
+                reqM_Txt.setText(String.valueOf(orderRatioDTO.getMQty() - m));
                 exM_Txt.setText("0");
             }
-            if (orderRatio.getLQty() <= l) {
+            if (orderRatioDTO.getLQty() <= l) {
                 reqL_Txt.setText("0");
                 reqL_Txt.setFill(Color.GREEN);
-                exL_Txt.setText(String.valueOf(l - orderRatio.getLQty()));
+                exL_Txt.setText(String.valueOf(l - orderRatioDTO.getLQty()));
             }else {
-                reqL_Txt.setText(String.valueOf(orderRatio.getLQty() - l));
+                reqL_Txt.setText(String.valueOf(orderRatioDTO.getLQty() - l));
                 exL_Txt.setText("0");
             }
-            if (orderRatio.getXlQty() <= xl) {
+            if (orderRatioDTO.getXlQty() <= xl) {
                 reqXL_Txt.setText("0");
                 reqXL_Txt.setFill(Color.GREEN);
-                exXL_Txt.setText(String.valueOf(xl - orderRatio.getXlQty()));
+                exXL_Txt.setText(String.valueOf(xl - orderRatioDTO.getXlQty()));
             }else {
-                reqXL_Txt.setText(String.valueOf(orderRatio.getXlQty() - xl));
+                reqXL_Txt.setText(String.valueOf(orderRatioDTO.getXlQty() - xl));
                 exXL_Txt.setText("0");
             }
-            if (orderRatio.getXxlty() <= xxl) {
+            if (orderRatioDTO.getXxlty() <= xxl) {
                 reqXXL_Txt.setText("0");
                 reqXXL_Txt.setFill(Color.GREEN);
-                exXXL_Txt.setText(String.valueOf(xxl - orderRatio.getXxlty()));
+                exXXL_Txt.setText(String.valueOf(xxl - orderRatioDTO.getXxlty()));
             }else {
-                reqXXL_Txt.setText(String.valueOf(orderRatio.getXxlty() - xxl));
+                reqXXL_Txt.setText(String.valueOf(orderRatioDTO.getXxlty() - xxl));
                 exXXL_Txt.setText("0");
             }
 
@@ -173,15 +175,15 @@ public class OrderFormController implements Initializable {
     }
     private void loadFinishQty(String oId, String clId) {
         try {
-            List<Pack> all = PackingModel.getAll(oId);
-            for (Pack pack: all){
-                if (pack.getClId().equals(clId)){
-                    switch (pack.getSize()) {
-                        case "S" -> s += pack.getPackQty();
-                        case "M" -> m += pack.getPackQty();
-                        case "L" -> l += pack.getPackQty();
-                        case "XL" -> xl += pack.getPackQty();
-                        case "XXl" -> xxl += pack.getPackQty();
+            List<PackDTO> all = orderBO.getAll(oId);
+            for (PackDTO packDTO : all){
+                if (packDTO.getClId().equals(clId)){
+                    switch (packDTO.getSize()) {
+                        case "S" -> s += packDTO.getPackQty();
+                        case "M" -> m += packDTO.getPackQty();
+                        case "L" -> l += packDTO.getPackQty();
+                        case "XL" -> xl += packDTO.getPackQty();
+                        case "XXl" -> xxl += packDTO.getPackQty();
                     }
                 }
             }
@@ -199,13 +201,13 @@ public class OrderFormController implements Initializable {
     }
     void loadOrderQty(String oId,String clId){
         try {
-            OrderRatio orderRatio= LoadSizesModel.ratio(oId,clId);
+            OrderRatioDTO orderRatioDTO = orderBO.ratio(oId,clId);
 
-            orderS_Txt.setText(String.valueOf(orderRatio.getSQty()));
-            orderM_Txt.setText(String.valueOf(orderRatio.getMQty()));
-            orderL_Txt.setText(String.valueOf(orderRatio.getLQty()));
-            orderXL_Txt.setText(String.valueOf(orderRatio.getXlQty()));
-            orderXXL_Txt.setText(String.valueOf(orderRatio.getXxlty()));
+            orderS_Txt.setText(String.valueOf(orderRatioDTO.getSQty()));
+            orderM_Txt.setText(String.valueOf(orderRatioDTO.getMQty()));
+            orderL_Txt.setText(String.valueOf(orderRatioDTO.getLQty()));
+            orderXL_Txt.setText(String.valueOf(orderRatioDTO.getXlQty()));
+            orderXXL_Txt.setText(String.valueOf(orderRatioDTO.getXxlty()));
 
 
 
@@ -225,7 +227,7 @@ public class OrderFormController implements Initializable {
         ObservableList<String> obList = FXCollections.observableArrayList();
         List<String> ids = null;
         try {
-            ids = IdModel.loadOrderIds();
+            ids = orderBO.loadOrderIds();
         } catch (SQLException e) {}
 
         for (String id : ids) {

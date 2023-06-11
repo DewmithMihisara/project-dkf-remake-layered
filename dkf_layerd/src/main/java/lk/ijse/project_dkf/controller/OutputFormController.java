@@ -11,25 +11,19 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import lk.ijse.project_dkf.animation.SetTime;
 import lk.ijse.project_dkf.animation.ShakeTextAnimation;
+import lk.ijse.project_dkf.bo.BOFactory;
+import lk.ijse.project_dkf.bo.custom.OutputBO;
+import lk.ijse.project_dkf.bo.custom.impl.OutputBOImpl;
 import lk.ijse.project_dkf.db.DBConnection;
-import lk.ijse.project_dkf.dto.Buyer;
-import lk.ijse.project_dkf.dto.OrderRatio;
-import lk.ijse.project_dkf.dto.Output;
-import lk.ijse.project_dkf.dto.Pack;
-import lk.ijse.project_dkf.dto.tm.OrderRatioTM;
-import lk.ijse.project_dkf.dto.tm.OutputTM;
-import lk.ijse.project_dkf.dto.tm.PackingTM;
-import lk.ijse.project_dkf.model.*;
+import lk.ijse.project_dkf.dto.OutputDTO;
+import lk.ijse.project_dkf.tm.OutputTM;
 import lk.ijse.project_dkf.notification.PopUps;
 import lk.ijse.project_dkf.util.AlertTypes;
-import lk.ijse.project_dkf.util.Navigation;
-import lk.ijse.project_dkf.util.Rout;
 import lk.ijse.project_dkf.validation.inputsValidation;
 import lombok.Getter;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.sql.Date;
@@ -67,6 +61,7 @@ public class OutputFormController implements Initializable {
     @FXML
     private ComboBox<String> sizeCmbBx;
     boolean clId,size,qty;
+    OutputBO outputBO= BOFactory.getBoFactory().getBO(BOFactory.BO.OUTPUT);
 
     {
         clId=false;
@@ -80,7 +75,7 @@ public class OutputFormController implements Initializable {
         qty=inputsValidation.isNumberOrNull(qtyTxt);
 
         if (clId && size && qty){
-            Output output = new Output(
+            OutputDTO outputDTO = new OutputDTO(
                     orderIdCmbBox.getSelectionModel().getSelectedItem(),
                     Date.valueOf(dateTxt.getText()),
                     Time.valueOf(timeLbl.getText()),
@@ -89,12 +84,12 @@ public class OutputFormController implements Initializable {
                     Integer.parseInt(qtyTxt.getText())
             );
             try {
-                boolean affectedRows = OutputModel.add(output);
+                boolean affectedRows = outputBO.add(outputDTO);
                 if (affectedRows) {
-                    PopUps.popUps(AlertTypes.CONFORMATION, "Output Add", "Output is add properly.");
+                    PopUps.popUps(AlertTypes.CONFORMATION, "OutputDTO Add", "OutputDTO is add properly.");
                 }
             } catch (SQLException e) {
-                PopUps.popUps(AlertTypes.WARNING, "SQL Warning", "Database error when add output.");
+                PopUps.popUps(AlertTypes.WARNING, "SQL Warning", "Database error when add outputDTO.");
             }finally {
                 loadValues(orderIdCmbBox.getSelectionModel().getSelectedItem());
                 clrCmbBx.setValue(null);
@@ -131,9 +126,16 @@ public class OutputFormController implements Initializable {
     void deleteBtnOnAction(ActionEvent event) {
         OutputTM output=outTbl.getSelectionModel().getSelectedItem();
         try {
-            boolean delete = OutputModel.delete(output, orderIdCmbBox.getSelectionModel().getSelectedItem());
+            boolean delete = outputBO.delete(new OutputDTO(
+                    orderIdCmbBox.getSelectionModel().getSelectedItem(),
+                    output.getDate(),
+                    output.getTime(),
+                    output.getClId(),
+                    output.getSize(),
+                    output.getOut()
+            ));
             if (delete) {
-                PopUps.popUps(AlertTypes.CONFORMATION, "Output Add", "Output is delete properly.");
+                PopUps.popUps(AlertTypes.CONFORMATION, "OutputDTO Delete", "OutputDTO is delete properly.");
             }
 
         } catch (SQLException e) {
@@ -172,7 +174,7 @@ public class OutputFormController implements Initializable {
         ObservableList<String> obList = FXCollections.observableArrayList();
         List<String> ids = null;
         try {
-            ids = IdModel.loadClothId(orderIdCmbBox.getSelectionModel().getSelectedItem());
+            ids = outputBO.loadClothId(orderIdCmbBox.getSelectionModel().getSelectedItem());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -186,7 +188,7 @@ public class OutputFormController implements Initializable {
         ObservableList<String> obList = FXCollections.observableArrayList();
         List<String> ids = null;
         try {
-            ids = IdModel.loadOrderIds();
+            ids = outputBO.loadOrderIds();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -202,14 +204,14 @@ public class OutputFormController implements Initializable {
     private void loadValues(String id) {
         ObservableList<OutputTM> outputTMS = FXCollections.observableArrayList();
         try {
-            List<Output> all = OutputModel.getAll(id);
-            for (Output output: all){
+            List<OutputDTO> all = outputBO.getAll(id);
+            for (OutputDTO outputDTO : all){
                 outputTMS.add(new OutputTM(
-                        output.getDate(),
-                        output.getTime(),
-                        output.getClId(),
-                        output.getSize(),
-                        output.getOut()
+                        outputDTO.getDate(),
+                        outputDTO.getTime(),
+                        outputDTO.getClId(),
+                        outputDTO.getSize(),
+                        outputDTO.getOut()
                 ));
             }
             outTbl.setItems(outputTMS);

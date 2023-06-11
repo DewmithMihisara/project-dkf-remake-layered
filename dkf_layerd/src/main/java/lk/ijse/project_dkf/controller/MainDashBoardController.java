@@ -1,10 +1,8 @@
 package lk.ijse.project_dkf.controller;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -13,7 +11,9 @@ import javafx.scene.layout.AnchorPane;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 import lk.ijse.project_dkf.animation.SetTime;
-import lk.ijse.project_dkf.model.LogHistoryModel;
+import lk.ijse.project_dkf.bo.BOFactory;
+import lk.ijse.project_dkf.bo.custom.MainDashBoardBO;
+import lk.ijse.project_dkf.bo.custom.impl.MainDashBoardBOImpl;
 import lk.ijse.project_dkf.notification.PopUps;
 import lk.ijse.project_dkf.util.*;
 import lk.ijse.project_dkf.voiceAssistant.Assistant;
@@ -25,9 +25,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 import static lk.ijse.project_dkf.util.Rout.*;
@@ -55,7 +53,7 @@ public class MainDashBoardController implements Initializable {
     private Button assBtn;
     Assistant assistant;
     String command;
-
+    MainDashBoardBO mainDashBoardBO= BOFactory.getBoFactory().getBO(BOFactory.BO.MAIN_DASH_BOARD);
     @FXML
     void assistantOnAction(ActionEvent event) throws IOException, JavaLayerException {
         Thread audio=new Thread(()->{
@@ -138,13 +136,13 @@ public class MainDashBoardController implements Initializable {
 
     @FXML
     void logOutBtnOnAction(ActionEvent event) throws IOException {
-        LogInFormController.logHistory.setLogOut(LocalDateTime.now());
+        LogInFormController.logHistoryDTO.setLogOut(LocalDateTime.now());
         try {
-            LogHistoryModel.save(LogInFormController.logHistory);
+            mainDashBoardBO.saveLogHistory(LogInFormController.logHistoryDTO);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        LogInFormController.logHistory = null;
+        LogInFormController.logHistoryDTO = null;
         Navigation.navigation(LOGIN, root);
     }
 

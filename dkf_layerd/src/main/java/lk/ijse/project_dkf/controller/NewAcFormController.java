@@ -1,20 +1,12 @@
 package lk.ijse.project_dkf.controller;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import lk.ijse.project_dkf.animation.ShakeTextAnimation;
-import lk.ijse.project_dkf.dto.User;
-import lk.ijse.project_dkf.model.LogInModel;
-import lk.ijse.project_dkf.model.NewACModel;
+import lk.ijse.project_dkf.dto.UserDTO;
 import lk.ijse.project_dkf.notification.PopUps;
 import lk.ijse.project_dkf.util.AlertTypes;
 import lk.ijse.project_dkf.util.Navigation;
@@ -23,11 +15,10 @@ import lk.ijse.project_dkf.validation.inputsValidation;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class NewAcFormController implements Initializable {
-    public static User user;
+    public static UserDTO userDTO;
     @FXML
     private Button nxtBtn;
     @FXML
@@ -66,15 +57,15 @@ public class NewAcFormController implements Initializable {
 
         if (usr && adr && phn && jb_role){
             if (jobTxt.getText().equals("owner")){
-                PopUps.popUps(AlertTypes.INFORMATION, "Attention", "This user name can not add.");
+                PopUps.popUps(AlertTypes.INFORMATION, "Attention", "This userDTO name can not add.");
                 jobTxt.setText("");
                 ShakeTextAnimation.ShakeText(jobTxt);
             }else {
-                user=new User();
-                user.setUserName(usrTxt.getText());
-                user.setAddress(addressTxt.getText());
-                user.setContact(PhoneTxt.getText());
-                user.setPosition(jobTxt.getText());
+                userDTO =new UserDTO();
+                userDTO.setUserName(usrTxt.getText());
+                userDTO.setAddress(addressTxt.getText());
+                userDTO.setContact(PhoneTxt.getText());
+                userDTO.setPosition(jobTxt.getText());
 
                 Navigation.navigation(Rout.PASSWORD,root);
             }
@@ -86,21 +77,21 @@ public class NewAcFormController implements Initializable {
     }
     @FXML
     void signInBtnOnActon(ActionEvent event) throws IOException {
-        user=null;
+        userDTO =null;
         Navigation.navigation(Rout.LOGIN,root);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if (user != null){
+        if (userDTO != null){
             loadValues();
         }
     }
 
     private void loadValues() {
-        usrTxt.setText(user.getUserName());
-        jobTxt.setText(user.getPosition());
-        PhoneTxt.setText(user.getContact());
-        addressTxt.setText(user.getAddress());
+        usrTxt.setText(userDTO.getUserName());
+        jobTxt.setText(userDTO.getPosition());
+        PhoneTxt.setText(userDTO.getContact());
+        addressTxt.setText(userDTO.getAddress());
     }
 }

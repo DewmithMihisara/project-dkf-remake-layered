@@ -7,14 +7,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import lk.ijse.project_dkf.animation.ShakeTextAnimation;
+import lk.ijse.project_dkf.bo.BOFactory;
+import lk.ijse.project_dkf.bo.custom.ShippingBO;
+import lk.ijse.project_dkf.bo.custom.impl.ShippingBOImpl;
 import lk.ijse.project_dkf.db.DBConnection;
-import lk.ijse.project_dkf.dto.Buyer;
-import lk.ijse.project_dkf.dto.Shipment;
-import lk.ijse.project_dkf.dto.tm.ShipmentTM;
-import lk.ijse.project_dkf.dto.tm.TrimCardTM;
-import lk.ijse.project_dkf.model.*;
+import lk.ijse.project_dkf.dto.BuyerDTO;
+import lk.ijse.project_dkf.dto.ShipmentDTO;
+import lk.ijse.project_dkf.tm.ShipmentTM;
 import lk.ijse.project_dkf.notification.PopUps;
 import lk.ijse.project_dkf.util.AlertTypes;
 import lk.ijse.project_dkf.validation.inputsValidation;
@@ -55,8 +55,10 @@ public class ShipingFormController implements Initializable {
     private Label AvalabilityLbl;
     @FXML
     private TableColumn<?, ?> sizeColm;
-    public static ObservableList<Shipment> shipments = FXCollections.observableArrayList();
+    public static ObservableList<ShipmentDTO> shipmentDTOS = FXCollections.observableArrayList();
     private ObservableList<ShipmentTM> shipmentTMS = FXCollections.observableArrayList();
+
+    ShippingBO shippingBO= BOFactory.getBoFactory().getBO(BOFactory.BO.SHIPPING);
     boolean cid,sz,qty;
     {
         cid=false;
@@ -73,11 +75,11 @@ public class ShipingFormController implements Initializable {
             if(Integer.parseInt(AvalabilityLbl.getText()) >= Integer.parseInt(qtyTxt.getText()) && Integer.parseInt(AvalabilityLbl.getText()) != 0){
                 String detail;
                 try {
-                    detail=ShipModel.searchClothDetail(clothIdCmbBox.getSelectionModel().getSelectedItem());
+                    detail= shippingBO.searchClothDetail(clothIdCmbBox.getSelectionModel().getSelectedItem());
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
-                shipments.add(new Shipment(
+                shipmentDTOS.add(new ShipmentDTO(
                         orderIdCmbBox.getSelectionModel().getSelectedItem(),
                         buyerNameTxt.getText(),
                         buyerAddressTxt.getText(),
@@ -88,10 +90,10 @@ public class ShipingFormController implements Initializable {
                         detail
                 ));
                 shipmentTMS.add(new ShipmentTM(
-                        shipments.get(shipments.size()-1).getClid(),
-                        shipments.get(shipments.size()-1).getDesc(),
-                        shipments.get(shipments.size()-1).getSize(),
-                        shipments.get(shipments.size()-1).getQty()
+                        shipmentDTOS.get(shipmentDTOS.size()-1).getClid(),
+                        shipmentDTOS.get(shipmentDTOS.size()-1).getDesc(),
+                        shipmentDTOS.get(shipmentDTOS.size()-1).getSize(),
+                        shipmentDTOS.get(shipmentDTOS.size()-1).getQty()
                 ));
                 shipTbl.setItems(shipmentTMS);
             }else {
@@ -117,12 +119,12 @@ public class ShipingFormController implements Initializable {
                 shipmentTMS.remove(i);
             }
         }
-        for (int i = 0; i < shipments.size(); i++) {
-            if (shipments.get(i).getClid().equals(id)
-                    && shipments.get(i).getDesc().equals(desc)
-                    && shipments.get(i).getSize().equals(size)
-                    && shipments.get(i).getQty()==qty){
-                shipments.remove(i);
+        for (int i = 0; i < shipmentDTOS.size(); i++) {
+            if (shipmentDTOS.get(i).getClid().equals(id)
+                    && shipmentDTOS.get(i).getDesc().equals(desc)
+                    && shipmentDTOS.get(i).getSize().equals(size)
+                    && shipmentDTOS.get(i).getQty()==qty){
+                shipmentDTOS.remove(i);
                 break;
             }
         }
@@ -130,16 +132,16 @@ public class ShipingFormController implements Initializable {
     @FXML
     void placeOnAction(ActionEvent event) throws JRException {
         try {
-            boolean isPlaced= ShippinPlaceModel.shipmentPlace(shipments);
-            PopUps.popUps(AlertTypes.CONFORMATION, "Shipped", "Shipment is done properly.");
+            boolean isPlaced= shippingBO.shipmentPlace(shipmentDTOS);
+            PopUps.popUps(AlertTypes.CONFORMATION, "Shipped", "ShipmentDTO is done properly.");
             Thread printThread = new Thread(() -> {
                 try {
                     if (isPlaced){
                         InputStream rpt = ShipingFormController.class.getResourceAsStream("/reports/Invoice.jrxml");
                         JasperReport compile =  JasperCompileManager.compileReport(rpt);
                         Map<String,Object> data = new HashMap<>();
-                        data.put("name",shipments.get(0).getBuyerName());
-                        data.put("adrs",shipments.get(0).getBuyerAddress());
+                        data.put("name", shipmentDTOS.get(0).getBuyerName());
+                        data.put("adrs", shipmentDTOS.get(0).getBuyerAddress());
                         JasperPrint report = JasperFillManager.fillReport(compile,data, DBConnection.getInstance().getConnection());
                         JasperViewer.viewReport(report,false);
                     }
@@ -168,7 +170,7 @@ public class ShipingFormController implements Initializable {
     }
     private void loadAvailability() {
         try {
-            int available = ShipModel.searchAvailability(clothIdCmbBox.getSelectionModel().getSelectedItem(), sizeCmbBx.getSelectionModel().getSelectedItem());
+            int available = shippingBO.searchAvailability(clothIdCmbBox.getSelectionModel().getSelectedItem(), sizeCmbBx.getSelectionModel().getSelectedItem());
             AvalabilityLbl.setText(String.valueOf(available));
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -176,10 +178,10 @@ public class ShipingFormController implements Initializable {
     }
     private void loadBuyer() {
         try {
-            Buyer buyer= ShipModel.searchBuyer(orderIdCmbBox.getSelectionModel().getSelectedItem());
+            BuyerDTO buyerDTO = shippingBO.searchBuyer(orderIdCmbBox.getSelectionModel().getSelectedItem());
 
-            buyerNameTxt.setText(buyer.getBuyerName());
-            buyerAddressTxt.setText(buyer.getBuyerAddress());
+            buyerNameTxt.setText(buyerDTO.getBuyerName());
+            buyerAddressTxt.setText(buyerDTO.getBuyerAddress());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } {
@@ -190,7 +192,7 @@ public class ShipingFormController implements Initializable {
         ObservableList<String> obList = FXCollections.observableArrayList();
         List<String> ids = null;
         try {
-            ids = IdModel.loadClothId(orderIdCmbBox.getSelectionModel().getSelectedItem());
+            ids = shippingBO.loadClothId(orderIdCmbBox.getSelectionModel().getSelectedItem());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -228,7 +230,7 @@ public class ShipingFormController implements Initializable {
         ObservableList<String> obList = FXCollections.observableArrayList();
         List<String> ids = null;
         try {
-            ids = IdModel.loadOrderIds();
+            ids = shippingBO.loadOrderIds();
         } catch (SQLException e) {}
 
         for (String id : ids) {

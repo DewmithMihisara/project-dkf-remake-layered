@@ -10,15 +10,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import lk.ijse.project_dkf.animation.SetTime;
-import lk.ijse.project_dkf.dto.Cut;
-import lk.ijse.project_dkf.dto.Output;
-import lk.ijse.project_dkf.dto.Pack;
-import lk.ijse.project_dkf.dto.tm.CutTM;
-import lk.ijse.project_dkf.dto.tm.PackingTM;
-import lk.ijse.project_dkf.model.CutModel;
-import lk.ijse.project_dkf.model.IdModel;
-import lk.ijse.project_dkf.model.OutputModel;
-import lk.ijse.project_dkf.model.PackingModel;
+import lk.ijse.project_dkf.bo.BOFactory;
+import lk.ijse.project_dkf.bo.custom.CutBO;
+import lk.ijse.project_dkf.dto.CutDTO;
+import lk.ijse.project_dkf.tm.CutTM;
+import lk.ijse.project_dkf.bo.custom.impl.CutBOImpl;
 import lk.ijse.project_dkf.notification.PopUps;
 import lk.ijse.project_dkf.util.AlertTypes;
 import lk.ijse.project_dkf.util.Navigation;
@@ -66,7 +62,7 @@ public class CutInputFormController implements Initializable {
     private ComboBox<String> sizeCmbBx;
     @FXML
     private TextField typeTxt;
-
+    CutBO cutBO= BOFactory.getBoFactory().getBO(BOFactory.BO.CUT);
     boolean clId, size, type, qty;
     {
         clId=false;
@@ -82,7 +78,7 @@ public class CutInputFormController implements Initializable {
         qty=inputsValidation.isNumberOrNull(qtyTxt);
 
         if(clId && size && type && qty){
-            Cut cut = new Cut(
+            CutDTO cutDTO = new CutDTO(
                     orderIdCmbBox.getSelectionModel().getSelectedItem(),
                     clrCmbBx.getSelectionModel().getSelectedItem(),
                     Date.valueOf(dateTxt.getText()),
@@ -91,14 +87,14 @@ public class CutInputFormController implements Initializable {
                     typeTxt.getText(),
                     sizeCmbBx.getSelectionModel().getSelectedItem()
             );
-            String string= "Cut input of "+cut.getCutID();
+            String string= "CutDTO input of "+ cutDTO.getCutID();
             try {
-                boolean affectedRows = CutModel.add(cut);
+                boolean affectedRows = cutBO.add(cutDTO);
                 if (affectedRows) {
-                    PopUps.popUps(AlertTypes.CONFORMATION, "Cut Added" ,string);
+                    PopUps.popUps(AlertTypes.CONFORMATION, "CutDTO Added" ,string);
                 }
             } catch (SQLException e) {
-                PopUps.popUps(AlertTypes.WARNING, "SQL Warning", "Database error when add cut.");
+                PopUps.popUps(AlertTypes.WARNING, "SQL Warning", "Database error when add cutDTO.");
             } finally {
                 loadValues(orderIdCmbBox.getSelectionModel().getSelectedItem());
             }
@@ -109,9 +105,9 @@ public class CutInputFormController implements Initializable {
         CutTM cutTM = cutTbl.getSelectionModel().getSelectedItem();
         String string=cutTM.getClothID() +" is delete";
         try {
-            boolean delete = CutModel.delete(cutTM, orderIdCmbBox.getSelectionModel().getSelectedItem());
+            boolean delete = cutBO.delete(new CutDTO(cutTM.getClothID(),orderIdCmbBox.getSelectionModel().getSelectedItem(),cutTM.getDate(),cutTM.getTime(),cutTM.getType(),cutTM.getSize()));
             if (delete) {
-                PopUps.popUps(AlertTypes.CONFORMATION, "Cut Added" ,string);
+                PopUps.popUps(AlertTypes.CONFORMATION, "CutDTO Added" ,string);
             }
 
         } catch (SQLException e) {
@@ -134,7 +130,7 @@ public class CutInputFormController implements Initializable {
         ObservableList<String> obList = FXCollections.observableArrayList();
         List<String> ids = null;
         try {
-            ids = IdModel.loadClothId(orderIdCmbBox.getSelectionModel().getSelectedItem());
+            ids = cutBO.loadClothId(orderIdCmbBox.getSelectionModel().getSelectedItem());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -168,7 +164,7 @@ public class CutInputFormController implements Initializable {
         ObservableList<String> obList = FXCollections.observableArrayList();
         List<String> ids = null;
         try {
-            ids = IdModel.loadOrderIds();
+            ids = cutBO.loadOrderIds();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -181,15 +177,15 @@ public class CutInputFormController implements Initializable {
     private void loadValues(String id) {
         ObservableList<CutTM> cutTMS = FXCollections.observableArrayList();
         try {
-            List<Cut> all = CutModel.getAll(id);
-            for (Cut cut : all) {
+            List<CutDTO> all = cutBO.getAll(id);
+            for (CutDTO cutDTO : all) {
                 cutTMS.add(new CutTM(
-                        cut.getDate(),
-                        cut.getTime(),
-                        cut.getClothId(),
-                        cut.getSize(),
-                        cut.getType(),
-                        cut.getCutQty()
+                        cutDTO.getDate(),
+                        cutDTO.getTime(),
+                        cutDTO.getClothId(),
+                        cutDTO.getSize(),
+                        cutDTO.getType(),
+                        cutDTO.getCutQty()
                 ));
             }
             cutTbl.setItems(cutTMS);

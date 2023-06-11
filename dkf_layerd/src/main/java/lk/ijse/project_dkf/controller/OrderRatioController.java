@@ -10,16 +10,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import lk.ijse.project_dkf.animation.ShakeTextAnimation;
-import lk.ijse.project_dkf.dto.Buyer;
-import lk.ijse.project_dkf.dto.Order;
-import lk.ijse.project_dkf.dto.OrderRatio;
-import lk.ijse.project_dkf.dto.tm.BuyerTM;
-import lk.ijse.project_dkf.dto.tm.OrderRatioTM;
-import lk.ijse.project_dkf.model.BuyerModel;
-import lk.ijse.project_dkf.model.OrderModel;
-import lk.ijse.project_dkf.model.OrderRatioModel;
+import lk.ijse.project_dkf.bo.BOFactory;
+import lk.ijse.project_dkf.bo.custom.OrderBO;
+import lk.ijse.project_dkf.bo.custom.OrderRatioBO;
+import lk.ijse.project_dkf.tm.OrderRatioTM;
+import lk.ijse.project_dkf.bo.custom.impl.OrderRatioBOImpl;
 import lk.ijse.project_dkf.notification.PopUps;
 import lk.ijse.project_dkf.util.AlertTypes;
 import lk.ijse.project_dkf.util.Navigation;
@@ -29,8 +24,6 @@ import lk.ijse.project_dkf.validation.inputsValidation;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class OrderRatioController implements Initializable {
@@ -82,6 +75,7 @@ public class OrderRatioController implements Initializable {
     private TableView<OrderRatioTM> tblOrderRatio;
     public static ObservableList<OrderRatioTM> orderRatioTM=FXCollections.observableArrayList();
     public static int addQty;
+    OrderRatioBO orderRatioBO= BOFactory.getBoFactory().getBO(BOFactory.BO.ORDER_RATIO);
     boolean desc,clr,s,m,l,xl,xxl,reqDone;
     {
         desc=false;
@@ -178,7 +172,7 @@ public class OrderRatioController implements Initializable {
         }
         addQty= (sSize+mSize+lSize+xlSize+xxlSize);
         addQtyTxt.setText(String.valueOf(addQty));
-        req=(NewOrderFormController.order.getTtlQty()-addQty);
+        req=(NewOrderFormController.orderDTO.getTtlQty()-addQty);
         reqQtyTxt.setText(String.valueOf(req));
         if (req>0){
             reqQtyTxt.setFill(Color.GREEN);
@@ -205,13 +199,13 @@ public class OrderRatioController implements Initializable {
     @FXML
     void nxtBtnOnAction(ActionEvent event) throws IOException {
         if (orderRatioTM.size()==0){
-            PopUps.popUps(AlertTypes.INFORMATION, "Attention", "Please add order ratio.");
+            PopUps.popUps(AlertTypes.INFORMATION, "Attention", "Please add orderDTO ratio.");
         }
         if (reqDone){
             Navigation.navigation(Rout.TRIM_CARD,pane);
         }else {
-            PopUps.popUps(AlertTypes.ERROR,"Order Error","You have to add order ratio." +
-                    "\nOrder ratio must equal to order qty.");
+            PopUps.popUps(AlertTypes.ERROR,"OrderDTO Error","You have to add orderDTO ratio." +
+                    "\nOrderDTO ratio must equal to orderDTO qty.");
         }
     }
     @Override
@@ -226,8 +220,8 @@ public class OrderRatioController implements Initializable {
         if (orderRatioTM !=null){
             loadValues();
         }
-        orderQtyTxt.setText(String.valueOf(NewOrderFormController.order.getTtlQty()));
-        reqQtyTxt.setText(String.valueOf(NewOrderFormController.order.getTtlQty()));
+        orderQtyTxt.setText(String.valueOf(NewOrderFormController.orderDTO.getTtlQty()));
+        reqQtyTxt.setText(String.valueOf(NewOrderFormController.orderDTO.getTtlQty()));
         addQtyTxt.setText(String.valueOf(addQty));
     }
     private void generateOrderIDByArray() {
@@ -255,11 +249,11 @@ public class OrderRatioController implements Initializable {
         xxlColm.setCellValueFactory(new PropertyValueFactory<>("xxl"));
     }
     private void setValues() {
-        orderIdTxt.setText(NewOrderFormController.order.getOrderId());
+        orderIdTxt.setText(NewOrderFormController.orderDTO.getOrderId());
     }
     private void generateOrderID() {
         try {
-            String id = OrderRatioModel.getNextOrderRatioID();
+            String id = orderRatioBO.getNextOrderRatioID();
             clothIDTxt.setText(id);
         } catch (SQLException e) {
             e.printStackTrace();

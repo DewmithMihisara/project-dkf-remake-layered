@@ -12,14 +12,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import lk.ijse.project_dkf.bo.BOFactory;
+import lk.ijse.project_dkf.bo.custom.SettingsBO;
+import lk.ijse.project_dkf.bo.custom.impl.SettingsBOImpl;
 import lk.ijse.project_dkf.db.DBConnection;
-import lk.ijse.project_dkf.dto.Buyer;
-import lk.ijse.project_dkf.dto.LogHistory;
-import lk.ijse.project_dkf.dto.User;
-import lk.ijse.project_dkf.dto.tm.BuyerTM;
-import lk.ijse.project_dkf.model.BuyerModel;
-import lk.ijse.project_dkf.model.LogHistoryModel;
-import lk.ijse.project_dkf.model.UserModel;
+import lk.ijse.project_dkf.dto.LogHistoryDTO;
 import lk.ijse.project_dkf.notification.PopUps;
 import lk.ijse.project_dkf.util.AlertTypes;
 import lk.ijse.project_dkf.util.Navigation;
@@ -31,7 +28,6 @@ import net.sf.jasperreports.view.JasperViewer;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +48,7 @@ public class SettingFormController implements Initializable {
     private TextField editprofileContactTxt;
 
     @FXML
-    private TableView<LogHistory> logHistoryTbl;
+    private TableView<LogHistoryDTO> logHistoryTbl;
 
     @FXML
     private TableColumn<?, ?> logInTimeClm;
@@ -69,6 +65,8 @@ public class SettingFormController implements Initializable {
     @FXML
     private Text usrtxtField;
     boolean mail, phn,add;
+    SettingsBO settingsBO= BOFactory.getBoFactory().getBO(BOFactory.BO.SETTINGS);
+
     {
         mail=false;
         phn=false;
@@ -99,7 +97,7 @@ public class SettingFormController implements Initializable {
     void printBtnOnAction(ActionEvent event) {
             Thread printThread = new Thread(() -> {
                 try {
-                    boolean isTrue = LogHistoryModel.isHave();
+                    boolean isTrue = settingsBO.isHave();
                     if (isTrue){
                         InputStream rpt = ShipingFormController.class.getResourceAsStream("/reports/logHistory.jrxml");
                         JasperReport compile =  JasperCompileManager.compileReport(rpt);
@@ -121,20 +119,20 @@ public class SettingFormController implements Initializable {
         add=inputsValidation.isNullTxt(addresseditProfileTxt);
 
         if (mail && phn && add){
-            LogInFormController.user.setUserEmail(eMailTxt.getText());
-            LogInFormController.user.setContact(editprofileContactTxt.getText());
-            LogInFormController.user.setAddress(addresseditProfileTxt.getText());
+            LogInFormController.userDTO.setUserEmail(eMailTxt.getText());
+            LogInFormController.userDTO.setContact(editprofileContactTxt.getText());
+            LogInFormController.userDTO.setAddress(addresseditProfileTxt.getText());
 
             try {
-                boolean isUpdate=UserModel.update(LogInFormController.user);
+                boolean isUpdate=settingsBO.update(LogInFormController.userDTO);
                 if (isUpdate){
-                    PopUps.popUps(AlertTypes.CONFORMATION, "Update User", "User update properly.");
+                    PopUps.popUps(AlertTypes.CONFORMATION, "Update UserDTO", "UserDTO update properly.");
                     editprofileContactTxt.setText("");
                     editprofileContactTxt.setText("");
                     addresseditProfileTxt.setText("");
                 }
             } catch (SQLException e) {
-                PopUps.popUps(AlertTypes.WARNING, "SQL Warning", "Database error when update user.");
+                PopUps.popUps(AlertTypes.WARNING, "SQL Warning", "Database error when update userDTO.");
             }
         }
     }
@@ -145,10 +143,10 @@ public class SettingFormController implements Initializable {
         setValuesOfTxt();
     }
     void setValuesOfTxt(){
-        usrtxtField.setText(LogInFormController.user.getUserName());
-        eMailTxt.setText(LogInFormController.user.getUserEmail());
-        editprofileContactTxt.setText(LogInFormController.user.getContact());
-        addresseditProfileTxt.setText(LogInFormController.user.getAddress());
+        usrtxtField.setText(LogInFormController.userDTO.getUserName());
+        eMailTxt.setText(LogInFormController.userDTO.getUserEmail());
+        editprofileContactTxt.setText(LogInFormController.userDTO.getContact());
+        addresseditProfileTxt.setText(LogInFormController.userDTO.getAddress());
     }
     private void setCelValueFactory() {
         colName.setCellValueFactory(new PropertyValueFactory<>("usrName"));
@@ -156,11 +154,11 @@ public class SettingFormController implements Initializable {
         logOutTimeClm.setCellValueFactory(new PropertyValueFactory<>("logOut"));
     }
     private void setValues() {
-        ObservableList<LogHistory> object = FXCollections.observableArrayList();
+        ObservableList<LogHistoryDTO> object = FXCollections.observableArrayList();
         try {
-            List<LogHistory> all = LogHistoryModel.getAll();
-            for (LogHistory log : all) {
-                object.add(new LogHistory(
+            List<LogHistoryDTO> all = settingsBO.getAll();
+            for (LogHistoryDTO log : all) {
+                object.add(new LogHistoryDTO(
                         log.getUsrName(),
                         log.getLogIn(),
                         log.getLogOut()

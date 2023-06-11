@@ -6,14 +6,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import lk.ijse.project_dkf.animation.ShakeTextAnimation;
-import lk.ijse.project_dkf.dto.Buyer;
-import lk.ijse.project_dkf.dto.Order;
-import lk.ijse.project_dkf.dto.OrderRatio;
-import lk.ijse.project_dkf.model.*;
+import lk.ijse.project_dkf.bo.BOFactory;
+import lk.ijse.project_dkf.bo.custom.NewOrderBO;
+import lk.ijse.project_dkf.bo.custom.impl.NewOrderBOImpl;
+import lk.ijse.project_dkf.dto.BuyerDTO;
+import lk.ijse.project_dkf.dto.OrderDTO;
 import lk.ijse.project_dkf.util.Navigation;
 import lk.ijse.project_dkf.util.NewWindowNavigation;
 import lk.ijse.project_dkf.util.Rout;
@@ -24,10 +24,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -58,7 +55,8 @@ public class NewOrderFormController implements Initializable {
     @FXML
     private TextField ttlQtyTxt;
     boolean cmpId, ttl, daily, pay, dedline;
-    public static Order order;
+    public static OrderDTO orderDTO;
+    NewOrderBO newOrderBO= BOFactory.getBoFactory().getBO(BOFactory.BO.NEW_ORDER);
     @FXML
     void paymentTermTxtOnAction(ActionEvent event) {
         ttlQtyTxt.requestFocus();
@@ -83,7 +81,7 @@ public class NewOrderFormController implements Initializable {
         if (cmpId && ttl && daily && pay && dedline) {
             if (Integer.parseInt(ttlQtyTxt.getText()) > Integer.parseInt(daylyOutTxt.getText())) {
                 if (Date.valueOf(dedlineDate.getValue()).after(Date.valueOf(orderDateTxt.getText()))) {
-                    order=new Order(
+                    orderDTO =new OrderDTO(
                             oIdLbl.getText(),
                             companyCmbBox.getSelectionModel().getSelectedItem(),
                             Date.valueOf(dedlineDate.getValue()),
@@ -119,20 +117,20 @@ public class NewOrderFormController implements Initializable {
         loadCompanyIds();
         setOrderDate();
         generateOrderID();
-        if (order != null){
+        if (orderDTO != null){
             loadData();
         }
 
     }
     private void loadData() {
 
-        oIdLbl.setText(order.getOrderId());
-        companyCmbBox.setValue(order.getCompId());
-        paymentTermTxt.setText(order.getPayment());
+        oIdLbl.setText(orderDTO.getOrderId());
+        companyCmbBox.setValue(orderDTO.getCompId());
+        paymentTermTxt.setText(orderDTO.getPayment());
         loadCompanyName();
-        ttlQtyTxt.setText(String.valueOf(order.getTtlQty()));
-        daylyOutTxt.setText(String.valueOf(order.getDailyOut()));
-        dedlineDate.setValue(order.getDline().toLocalDate());
+        ttlQtyTxt.setText(String.valueOf(orderDTO.getTtlQty()));
+        daylyOutTxt.setText(String.valueOf(orderDTO.getDailyOut()));
+        dedlineDate.setValue(orderDTO.getDline().toLocalDate());
     }
     private void setOrderDate() {
         orderDateTxt.setText(String.valueOf(LocalDate.now()));
@@ -141,7 +139,7 @@ public class NewOrderFormController implements Initializable {
         ObservableList<String> obList = FXCollections.observableArrayList();
         List<String> ids = null;
         try {
-            ids = NewOrderModel.loadIds();
+            ids = newOrderBO.loadIds();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -154,17 +152,17 @@ public class NewOrderFormController implements Initializable {
     private void loadCompanyName(){
         String id = (String) companyCmbBox.getValue();
 
-        Buyer buyer = null;
+        BuyerDTO buyerDTO = null;
         try {
-            buyer = NewOrderModel.searchById(id);
+            buyerDTO = newOrderBO.searchById(id);
         } catch (SQLException throwables) {
             new Alert(Alert.AlertType.WARNING, "Sql Error!").show();
         }
-        companyNameTxt.setText(buyer.getBuyerName());
+        companyNameTxt.setText(buyerDTO.getBuyerName());
     }
     private void generateOrderID() {
         try {
-            String id = OrderModel.getNextOrderID();
+            String id = newOrderBO.getNextOrderID();
             oIdLbl.setText(id);
         } catch (SQLException e) {
             e.printStackTrace();

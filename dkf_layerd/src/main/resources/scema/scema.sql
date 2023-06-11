@@ -75,7 +75,7 @@ CREATE TABLE Salary(
 );
 
 CREATE TABLE Buyer(
-    BuyerID VARCHAR(6) NOT NULL ,
+    BuyerID VARCHAR(20) NOT NULL ,
     BuyerName TEXT NOT NULL ,
     BuyerCN VARCHAR(12) NOT NULL ,
     BuyerAddress TEXT NOT NULL ,
@@ -83,8 +83,8 @@ CREATE TABLE Buyer(
 );
 
 CREATE TABLE Orders(
-    OrderID VARCHAR(6)NOT NULL ,
-    BuyerID VARCHAR(6)NOT NULL ,
+    OrderID VARCHAR(20)NOT NULL ,
+    BuyerID VARCHAR(20)NOT NULL ,
     Dedline DATE NOT NULL ,
     TtlQty int NOT NULL ,
     DailyOutQty int NOT NULL ,
@@ -95,7 +95,7 @@ CREATE TABLE Orders(
 );
 
 CREATE TABLE TrimCard(
-    OrderID VARCHAR(6)NOT NULL ,
+    OrderID VARCHAR(20)NOT NULL ,
     TrimID VARCHAR(30),
     type VARCHAR(20),
     Colour VARCHAR(10),
@@ -105,7 +105,7 @@ CREATE TABLE TrimCard(
 );
 
 CREATE TABLE OrderRatio(
-    OrderID VARCHAR(6)NOT NULL ,
+    OrderID VARCHAR(20)NOT NULL ,
     ClotheID VARCHAR(30),
     Disc TEXT NOT NULL ,
     Colour VARCHAR(10) NOT NULL ,
@@ -119,8 +119,8 @@ CREATE TABLE OrderRatio(
 );
 
 CREATE TABLE Input(
-    InputID VARCHAR(6)NOT NULL ,
-    OrderID VARCHAR(6)NOT NULL ,
+    InputID VARCHAR(20)NOT NULL ,
+    OrderID VARCHAR(20)NOT NULL ,
     RsdQty INT(30),
     SndQty INT(30),
     Seller VARCHAR(30),
@@ -130,7 +130,7 @@ CREATE TABLE Input(
 );
 
 CREATE TABLE Cut(
-    OrderId VARCHAR(6)NOT NULL ,
+    OrderId VARCHAR(20)NOT NULL ,
     ClotheID VARCHAR(30),
     Date DATE,
     Time TIME,
@@ -141,8 +141,8 @@ CREATE TABLE Cut(
 );
 
 CREATE TABLE CutIn(
-    InputID VARCHAR(6)NOT NULL ,
-    OrderId VARCHAR(6)NOT NULL ,
+    InputID VARCHAR(20)NOT NULL ,
+    OrderId VARCHAR(20)NOT NULL ,
     CONSTRAINT FOREIGN KEY (OrderId)REFERENCES Cut(OrderId)
         ON UPDATE CASCADE ON DELETE CASCADE,
     CONSTRAINT FOREIGN KEY (InputID)REFERENCES Input(InputID)
@@ -151,8 +151,8 @@ CREATE TABLE CutIn(
 );
 
 CREATE TABLE Material(
-    OrderID VARCHAR(6) NOT NULL ,
-    MatID VARCHAR(10),
+    OrderID VARCHAR(20) NOT NULL ,
+    MatID VARCHAR(20),
     Time TIME,
     MaterialQty INT(30),
     Date DATE,
@@ -160,8 +160,8 @@ CREATE TABLE Material(
 );
 
 CREATE TABLE MatIn(
-    InputID VARCHAR(6)NOT NULL ,
-    OrderID VARCHAR(6) NOT NULL ,
+    InputID VARCHAR(20)NOT NULL ,
+    OrderID VARCHAR(20) NOT NULL ,
     CONSTRAINT FOREIGN KEY (OrderID)REFERENCES Material(OrderID)
         ON UPDATE CASCADE ON DELETE CASCADE,
     CONSTRAINT FOREIGN KEY (InputID)REFERENCES Input(InputID)
@@ -170,7 +170,7 @@ CREATE TABLE MatIn(
 );
 
 CREATE TABLE Output(
-    OutputID VARCHAR(6) NOT NULL ,
+    OutputID VARCHAR(20) NOT NULL ,
     Day DATE,
     Time TIME,
     ClotheId VARCHAR(30),
@@ -180,8 +180,8 @@ CREATE TABLE Output(
 );
 
 CREATE TABLE IO(
-    OutputID VARCHAR(6) NOT NULL ,
-    InputID VARCHAR(6)NOT NULL ,
+    OutputID VARCHAR(20) NOT NULL ,
+    InputID VARCHAR(20)NOT NULL ,
     CONSTRAINT FOREIGN KEY (OutputID)REFERENCES Output(OutputID)
         ON UPDATE CASCADE ON DELETE CASCADE,
     CONSTRAINT FOREIGN KEY (InputID)REFERENCES Input(InputID)
@@ -190,7 +190,7 @@ CREATE TABLE IO(
 );
 
 CREATE TABLE Packing(
-    PackID VARCHAR(6)NOT NULL ,
+    PackID VARCHAR(20)NOT NULL ,
     Date DATE,
     Time TIME,
     ClotheID VARCHAR(30),
@@ -200,8 +200,8 @@ CREATE TABLE Packing(
 );
 
 CREATE TABLE OutPack(
-    OutputID VARCHAR(6) NOT NULL ,
-    PackID VARCHAR(6)NOT NULL ,
+    OutputID VARCHAR(20) NOT NULL ,
+    PackID VARCHAR(20)NOT NULL ,
     CONSTRAINT FOREIGN KEY (OutputID)REFERENCES Output(OutputID)
         ON UPDATE CASCADE ON DELETE CASCADE,
     CONSTRAINT FOREIGN KEY (PackID)REFERENCES Packing(PackID)
@@ -210,7 +210,7 @@ CREATE TABLE OutPack(
 );
 
 CREATE TABLE Shipment(
-    OrderID VARCHAR(6) NOT NULL ,
+    OrderID VARCHAR(20) NOT NULL ,
     buyerName VARCHAR(30),
     buyerAdd Text,
     ClotheId VARCHAR(30),
@@ -223,7 +223,7 @@ CREATE TABLE Shipment(
 
 CREATE TABLE Stock(
     ClotheID VARCHAR(30),
-    OrderId VARCHAR(6),
+    OrderId VARCHAR(20),
     size VARCHAR(10),
     qty int,
     CONSTRAINT FOREIGN KEY  (OrderID)REFERENCES Orders(OrderID),
@@ -231,8 +231,8 @@ CREATE TABLE Stock(
 );
 
 CREATE TABLE PackStock(
-    StockID VARCHAR(6)NOT NULL ,
-    PackID VARCHAR(6)NOT NULL ,
+    StockID VARCHAR(20)NOT NULL ,
+    PackID VARCHAR(20)NOT NULL ,
     CONSTRAINT FOREIGN KEY (StockID)REFERENCES Stock(OrderId)
         ON UPDATE CASCADE ON DELETE CASCADE,
     CONSTRAINT FOREIGN KEY (PackID)REFERENCES Packing(PackID)
@@ -241,7 +241,7 @@ CREATE TABLE PackStock(
 );
 
 CREATE TABLE Payment(
-    PayID VARCHAR(6)NOT NULL ,
+    PayID VARCHAR(20)NOT NULL ,
     Method TEXT,
     Prise DOUBLE(20,2),
     Date DATE,
@@ -249,8 +249,8 @@ CREATE TABLE Payment(
 );
 
 CREATE TABLE ShipPay(
-    ShipID VARCHAR(6)NOT NULL,
-    PayID VARCHAR(6)NOT NULL ,
+    ShipID VARCHAR(20)NOT NULL,
+    PayID VARCHAR(20)NOT NULL ,
     CONSTRAINT FOREIGN KEY (ShipID)REFERENCES Shipment(OrderID)
         ON UPDATE CASCADE ON DELETE CASCADE,
     CONSTRAINT FOREIGN KEY (PayID)REFERENCES Payment(PayID)
@@ -259,7 +259,7 @@ CREATE TABLE ShipPay(
 );
 
 CREATE TABLE Customer(
-    CustomerID VARCHAR(6)NOT NULL ,
+    CustomerID VARCHAR(20)NOT NULL ,
     CstName VARCHAR(30),
     CstCN VARCHAR(12),
     CstAddress TEXT,
@@ -268,8 +268,8 @@ CREATE TABLE Customer(
 );
 
 CREATE TABLE Invoice (
-    InvoiceID VARCHAR(6) NOT NULL ,
-    CustomerID VARCHAR(6)NOT NULL ,
+    InvoiceID VARCHAR(20) NOT NULL ,
+    CustomerID VARCHAR(20)NOT NULL ,
     PayMethod VARCHAR(20),
     Date DATE,
     Qty INT (30),
@@ -279,12 +279,14 @@ CREATE TABLE Invoice (
 );
 
 CREATE TABLE StockInvoice(
-    InvoiceID VARCHAR(6) NOT NULL ,
-    StockID VARCHAR(6)NOT NULL ,
+    InvoiceID VARCHAR(20) NOT NULL ,
+    StockID VARCHAR(20)NOT NULL ,
     CONSTRAINT FOREIGN KEY (InvoiceID)REFERENCES Invoice(InvoiceID)
         ON UPDATE CASCADE ON DELETE CASCADE,
     CONSTRAINT FOREIGN KEY (StockID)REFERENCES Stock(OrderId)
         ON UPDATE CASCADE ON DELETE CASCADE,
     CONSTRAINT PRIMARY KEY (StockID,InvoiceID)
 );
+
+INSERT INTO User (UserName, Password, UserEmail, UserContact, UserAddress, Position) VALUES("owner","Dew@2005","mihisaralokuhewage@gmail.com","111111","galle","owner");
 

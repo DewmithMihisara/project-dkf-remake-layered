@@ -9,14 +9,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import lk.ijse.project_dkf.dto.OrderRatio;
-import lk.ijse.project_dkf.dto.TrimCard;
-import lk.ijse.project_dkf.dto.tm.OrderRatioTM;
-import lk.ijse.project_dkf.dto.tm.TrimCardTM;
-import lk.ijse.project_dkf.model.OrderRatioModel;
-import lk.ijse.project_dkf.model.PlaceOrderModel;
-import lk.ijse.project_dkf.model.TrimCardModel;
+import lk.ijse.project_dkf.bo.BOFactory;
+import lk.ijse.project_dkf.bo.custom.TrimCardBO;
+import lk.ijse.project_dkf.bo.custom.impl.TrimCardBOImpl;
+import lk.ijse.project_dkf.tm.TrimCardTM;
 import lk.ijse.project_dkf.util.Navigation;
 import lk.ijse.project_dkf.util.Rout;
 import lk.ijse.project_dkf.validation.inputsValidation;
@@ -24,7 +20,6 @@ import lk.ijse.project_dkf.validation.inputsValidation;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class TrimCardFormController implements Initializable {
@@ -56,6 +51,7 @@ public class TrimCardFormController implements Initializable {
     @FXML
     private TableColumn<?, ?> typeColm;
     public static ObservableList<TrimCardTM> trimCardObj = FXCollections.observableArrayList();
+    TrimCardBO trimCardBO= BOFactory.getBoFactory().getBO(BOFactory.BO.TRIM_CARD);
     boolean material, clr, qty;
     {
         material=false;
@@ -121,18 +117,18 @@ public class TrimCardFormController implements Initializable {
                     .show();
         }else {
             try {
-                boolean isPlaced= PlaceOrderModel.placeOrder();
+                boolean isPlaced= trimCardBO.placeOrder();
                 if(isPlaced) {
-                    new Alert(Alert.AlertType.CONFIRMATION, "Order Placed").show();
+                    new Alert(Alert.AlertType.CONFIRMATION, "OrderDTO Placed").show();
                 } else {
-                    new Alert(Alert.AlertType.ERROR, "Order Not Placed").show();
+                    new Alert(Alert.AlertType.ERROR, "OrderDTO Not Placed").show();
                 }
 
             } catch (SQLException e) {
-                new Alert(Alert.AlertType.ERROR, "Order Not Placed").show();
+                new Alert(Alert.AlertType.ERROR, "OrderDTO Not Placed").show();
             }finally {
                 OrderRatioController.addQty=0;
-                NewOrderFormController.order=null;
+                NewOrderFormController.orderDTO =null;
                 OrderRatioController.orderRatioTM=FXCollections.observableArrayList();
                 TrimCardFormController.trimCardObj=FXCollections.observableArrayList();
 
@@ -146,7 +142,7 @@ public class TrimCardFormController implements Initializable {
     }
     @FXML
     void declairAllBtnOnAction(ActionEvent event) throws IOException {
-        NewOrderFormController.order=null;
+        NewOrderFormController.orderDTO =null;
         OrderRatioController.orderRatioTM=FXCollections.observableArrayList();
         trimCardObj=FXCollections.observableArrayList();
 
@@ -187,11 +183,11 @@ public class TrimCardFormController implements Initializable {
         qtyColm.setCellValueFactory(new PropertyValueFactory<>("qty"));
     }
     private void setValues() {
-        orderIdTxt.setText(NewOrderFormController.order.getOrderId());
+        orderIdTxt.setText(NewOrderFormController.orderDTO.getOrderId());
     }
     private void generateOrderID() {
         try {
-            String id = TrimCardModel.getNextTrimID();
+            String id = trimCardBO.getNextTrimID();
             trimIDTxt.setText(id);
         } catch (SQLException e) {
             e.printStackTrace();

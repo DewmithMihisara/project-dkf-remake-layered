@@ -1,14 +1,13 @@
 package lk.ijse.project_dkf.controller;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.project_dkf.animation.ShakeTextAnimation;
-import lk.ijse.project_dkf.model.BuyerModel;
-import lk.ijse.project_dkf.model.UserModel;
+import lk.ijse.project_dkf.bo.BOFactory;
+import lk.ijse.project_dkf.bo.custom.GmailConfirmBO;
+import lk.ijse.project_dkf.bo.custom.impl.GmailConfirmBOImpl;
 import lk.ijse.project_dkf.notification.PopUps;
 import lk.ijse.project_dkf.util.AlertTypes;
 import lk.ijse.project_dkf.util.Navigation;
@@ -30,6 +29,7 @@ public class GmailConfirmFormController {
     @FXML
     private TextField otpTxt;
     boolean mail;
+    GmailConfirmBO gmailConfirmBO= BOFactory.getBoFactory().getBO(BOFactory.BO.GMAIL_CONFIRM);
     @FXML
     void emailTxtOnAction(ActionEvent event) {
         conEmailTxt.requestFocus();
@@ -51,17 +51,17 @@ public class GmailConfirmFormController {
         mail= inputsValidation.email(emailTxt);
         if (emailTxt.getText().equals(conEmailTxt.getText())){
             if (Integer.parseInt(otpTxt.getText()) == PasswordFormController.otpNum){
-                NewAcFormController.user.setUserEmail(emailTxt.getText());
+                NewAcFormController.userDTO.setUserEmail(emailTxt.getText());
                 try {
-                    boolean affectedRows = UserModel.addUser(NewAcFormController.user);
+                    boolean affectedRows = gmailConfirmBO.addUser(NewAcFormController.userDTO);
                     if (affectedRows){
-                        String string="New user add. ("+NewAcFormController.user.getUserName()+")";
-                        PopUps.popUps(AlertTypes.CONFORMATION, "User", string);;
+                        String string="New userDTO add. ("+NewAcFormController.userDTO.getUserName()+")";
+                        PopUps.popUps(AlertTypes.CONFORMATION, "UserDTO", string);;
                         Navigation.navigation(Rout.LOGIN,root);
                         PasswordFormController.otpNum= 0;
                     }
                 } catch (SQLException e) {
-                    PopUps.popUps(AlertTypes.WARNING, "SQL Warning", "Database error when add user.");
+                    PopUps.popUps(AlertTypes.WARNING, "SQL Warning", "Database error when add userDTO.");
                 }
             }else {
                 ShakeTextAnimation.ShakeText(otpTxt);

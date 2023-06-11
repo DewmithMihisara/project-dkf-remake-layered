@@ -8,15 +8,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import lk.ijse.project_dkf.animation.ShakeTextAnimation;
-import lk.ijse.project_dkf.dto.User;
-import lk.ijse.project_dkf.model.UserModel;
+import lk.ijse.project_dkf.bo.BOFactory;
+import lk.ijse.project_dkf.bo.custom.PasswordSettingsBO;
+import lk.ijse.project_dkf.bo.custom.impl.PasswordSettingsBOImpl;
 import lk.ijse.project_dkf.notification.PopUps;
 import lk.ijse.project_dkf.util.AlertTypes;
 import lk.ijse.project_dkf.util.Navigation;
 import lk.ijse.project_dkf.util.Rout;
-import lk.ijse.project_dkf.validation.inputsValidation;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -44,6 +43,7 @@ public class PasswordSettingFormController {
     @FXML
     private TextField oldPwTxt;
     boolean pw,oldPw,cnPw;
+    PasswordSettingsBO passwordSettingBO= BOFactory.getBoFactory().getBO(BOFactory.BO.PASSWORD_SETTING);
 
     {
         pw=false;
@@ -58,7 +58,7 @@ public class PasswordSettingFormController {
 
     @FXML
     void dnBtnOnAction(ActionEvent event) {
-        if (LogInFormController.user.getPassword().equals(oldPwTxt.getText())){
+        if (LogInFormController.userDTO.getPassword().equals(oldPwTxt.getText())){
             oldPw=true;
             System.out.println("ok");
         }else {
@@ -67,17 +67,17 @@ public class PasswordSettingFormController {
         if (newPwTxt.getText().equals(confrmTxt.getText())){
             cnPw=true;
             if (pw && oldPw && cnPw){
-                LogInFormController.user.setPassword(newPwTxt.getText());
+                LogInFormController.userDTO.setPassword(newPwTxt.getText());
                 try {
-                    boolean isUpdate=UserModel.update(LogInFormController.user);
+                    boolean isUpdate=passwordSettingBO.update(LogInFormController.userDTO);
                     if (isUpdate){
-                        PopUps.popUps(AlertTypes.CONFORMATION, "Update User", "Password update properly.");
+                        PopUps.popUps(AlertTypes.CONFORMATION, "Update UserDTO", "Password update properly.");
                         oldPwTxt.setText("");
                         newPwTxt.setText("");
                         confrmTxt.setText("");
                     }
                 } catch (SQLException e) {
-                    PopUps.popUps(AlertTypes.WARNING, "SQL Warning", "Database error when update user.");
+                    PopUps.popUps(AlertTypes.WARNING, "SQL Warning", "Database error when update userDTO.");
                 }
             }
         }else {

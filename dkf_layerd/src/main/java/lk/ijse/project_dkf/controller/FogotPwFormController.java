@@ -7,8 +7,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.project_dkf.animation.ShakeTextAnimation;
-import lk.ijse.project_dkf.model.ForgotPwModel;
-import lk.ijse.project_dkf.model.UserModel;
+import lk.ijse.project_dkf.bo.BOFactory;
+import lk.ijse.project_dkf.bo.custom.ForgotPwBO;
+import lk.ijse.project_dkf.bo.custom.impl.ForgotPwBOImpl;
 import lk.ijse.project_dkf.notification.PopUps;
 import lk.ijse.project_dkf.util.*;
 
@@ -35,7 +36,7 @@ public class FogotPwFormController implements Initializable {
     @FXML
     private TextField otpTxt;
     private int otp;
-
+    ForgotPwBO forgotPwBO= BOFactory.getBoFactory().getBO(BOFactory.BO.FORGOT_PW);
     @FXML
     void cnPwTxtOnAction(ActionEvent event) {
         doneBtn.fire();
@@ -45,7 +46,7 @@ public class FogotPwFormController implements Initializable {
     void dnBtnOnAction(ActionEvent event) throws IOException {
         if (newPwTxt.getText().equals(cnPwTxt.getText())) {
             try {
-                boolean isUpdate = ForgotPwModel.updatePw(newPwTxt.getText(), LogInFormController.usrName);
+                boolean isUpdate = forgotPwBO.updatePw(newPwTxt.getText(), LogInFormController.usrName);
                 if (isUpdate) {
                     PopUps.popUps(AlertTypes.CONFORMATION, "Password", "Password is reset properly.");
                     Navigation.navigation(Rout.LOGIN, root);
@@ -94,7 +95,7 @@ public class FogotPwFormController implements Initializable {
     private void sendOtp() {
         String ownerMail;
         try {
-            ownerMail = UserModel.getOwnerMail();
+            ownerMail = forgotPwBO.getOwnerMail();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
