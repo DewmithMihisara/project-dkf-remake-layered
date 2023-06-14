@@ -1,10 +1,9 @@
 package lk.ijse.project_dkf.dao.custom.impl;
 
 import lk.ijse.project_dkf.dao.custom.MaterialDAO;
-import lk.ijse.project_dkf.dto.MaterialDTO;
 import lk.ijse.project_dkf.entity.Material;
-import lk.ijse.project_dkf.tm.MaterialTM;
-import lk.ijse.project_dkf.util.CrudUtil;
+import lk.ijse.project_dkf.view.tm.MaterialTM;
+import lk.ijse.project_dkf.dao.custom.impl.util.CrudUtil;
 
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -15,7 +14,7 @@ import java.util.List;
 
 public class MaterialDAOImpl implements MaterialDAO {
     public boolean add(Material material) throws SQLException {
-        String sql ="INSERT INTO MaterialDTO (OrderID, MatID, Time, MaterialQty ,Date ) VALUES(?, ?, ?, ?, ?)";
+        String sql ="INSERT INTO Material (OrderID, MatID, Time, MaterialQty ,Date ) VALUES(?, ?, ?, ?, ?)";
         return CrudUtil.execute(
                 sql,
                 material.getOrderID(),
@@ -32,7 +31,7 @@ public class MaterialDAOImpl implements MaterialDAO {
     }
 
     public boolean delete(Material material) throws SQLException {
-        String sql="DELETE FROM MaterialDTO WHERE OrderId=? AND MatID=? AND Date=? AND Time=?";
+        String sql="DELETE FROM Material WHERE OrderId=? AND MatID=? AND Date=? AND Time=?";
         boolean result = CrudUtil.execute(
                 sql,
                 material.getOrderID(),
@@ -44,7 +43,7 @@ public class MaterialDAOImpl implements MaterialDAO {
     }
 
     public List<Material> getAll(String id) throws SQLException {
-        String sql = "SELECT * FROM MaterialDTO WHERE OrderID =?";
+        String sql = "SELECT * FROM Material WHERE OrderID =?";
         ResultSet resultSet = CrudUtil.execute(sql,id);
 
         ArrayList<Material> materials =new ArrayList<>();

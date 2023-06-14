@@ -16,11 +16,10 @@ import java.sql.SQLException;
 import lk.ijse.project_dkf.animation.ShakeTextAnimation;
 import lk.ijse.project_dkf.bo.BOFactory;
 import lk.ijse.project_dkf.bo.custom.PasswordBO;
-import lk.ijse.project_dkf.bo.custom.impl.PasswordBOImpl;
-import lk.ijse.project_dkf.util.Gmail;
-import lk.ijse.project_dkf.util.MailTypes;
-import lk.ijse.project_dkf.util.Navigation;
-import lk.ijse.project_dkf.util.Rout;
+import lk.ijse.project_dkf.controller.util.Gmail;
+import lk.ijse.project_dkf.controller.util.MailTypes;
+import lk.ijse.project_dkf.controller.util.Navigation;
+import lk.ijse.project_dkf.controller.util.Rout;
 import lk.ijse.project_dkf.validation.inputsValidation;
 
 import java.io.IOException;

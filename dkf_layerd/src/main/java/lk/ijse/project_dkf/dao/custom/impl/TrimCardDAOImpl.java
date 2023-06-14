@@ -2,8 +2,8 @@ package lk.ijse.project_dkf.dao.custom.impl;
 
 import javafx.collections.ObservableList;
 import lk.ijse.project_dkf.dao.custom.TrimCardDAO;
-import lk.ijse.project_dkf.tm.TrimCardTM;
-import lk.ijse.project_dkf.util.CrudUtil;
+import lk.ijse.project_dkf.view.tm.TrimCardTM;
+import lk.ijse.project_dkf.dao.custom.impl.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class TrimCardDAOImpl implements TrimCardDAO {
     public List<String> loadMaterialId(String id) throws SQLException {
-        String sql="SELECT TrimID FROM TrimCardDTO WHERE OrderID=?";
+        String sql="SELECT TrimID FROM TrimCard WHERE OrderID=?";
         ResultSet resultSet = CrudUtil.execute(sql,id);
 
         List<String>data=new ArrayList<>();
@@ -23,7 +23,7 @@ public class TrimCardDAOImpl implements TrimCardDAO {
         return data;
     }
     public boolean addTrimCard(ObservableList<TrimCardTM> trimCardObj, String orderId) throws SQLException {
-        String sql ="INSERT INTO TrimCardDTO (OrderID,TrimID,type,Colour,ReqQty ) VALUES(?, ?, ?, ?, ?)";
+        String sql ="INSERT INTO TrimCard (OrderID,TrimID,type,Colour,ReqQty ) VALUES(?, ?, ?, ?, ?)";
         int routs=0;
         for (int i = 0; i < trimCardObj.size(); i++) {
             TrimCardTM trimCard = trimCardObj.get(i);
@@ -43,13 +43,21 @@ public class TrimCardDAOImpl implements TrimCardDAO {
         return false;
     }
     public String generateNewID() throws SQLException {
-        ResultSet rst = CrudUtil.execute("SELECT TrimID FROM TrimCardDTO ORDER BY TrimID DESC LIMIT 1");
-        if (rst.next()) {
-            String id = rst.getString("id");
-            int newCustomerId = Integer.parseInt(id.replace("Tr0-", "")) + 1;
-            return String.format("Tr0-%03d", newCustomerId);
-        } else {
-            return "Tr0-001";
+        String sql="SELECT TrimID FROM TrimCard ORDER BY TrimID DESC LIMIT 1";
+        ResultSet resultSet = CrudUtil.execute(sql);
+
+        if (resultSet.next()) {
+            return splitOrderId(resultSet.getString(1));
         }
+        return splitOrderId(null);
+    }
+   public String splitOrderId(String currentId) {
+        if(currentId != null) {
+            String[] strings = currentId.split("Tr-");
+            int id = Integer.parseInt(strings[1]);
+            id++;
+            return "Tr-" + id;
+        }
+        return "Tr-10000";
     }
 }

@@ -9,6 +9,5 @@ import java.util.List;
 
 public interface LogHistoryDAO extends CrudDAO<LogHistory, String> {
     void save(LogHistory logHistory) throws SQLException;
-
     boolean isHave() throws SQLException;
 }

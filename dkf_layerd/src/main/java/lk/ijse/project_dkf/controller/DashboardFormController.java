@@ -4,25 +4,15 @@ package lk.ijse.project_dkf.controller;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import lk.ijse.project_dkf.animation.SetTime;
-import lk.ijse.project_dkf.util.Navigation;
-import lk.ijse.project_dkf.util.Rout;
+import lk.ijse.project_dkf.controller.util.Navigation;
+import lk.ijse.project_dkf.controller.util.Rout;
 import lombok.Getter;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 @Getter

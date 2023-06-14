@@ -4,8 +4,8 @@ import javafx.collections.ObservableList;
 import lk.ijse.project_dkf.dao.custom.OrderRatioDAO;
 import lk.ijse.project_dkf.dto.OrderDTO;
 import lk.ijse.project_dkf.dto.OrderRatioDTO;
-import lk.ijse.project_dkf.tm.OrderRatioTM;
-import lk.ijse.project_dkf.util.CrudUtil;
+import lk.ijse.project_dkf.view.tm.OrderRatioTM;
+import lk.ijse.project_dkf.dao.custom.impl.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class OrderRatioDAOImpl implements OrderRatioDAO {
     public List<String> loadClothId(String id) throws SQLException {
-        String sql="SELECT ClotheID FROM OrderRatioDTO WHERE OrderID=?";
+        String sql="SELECT ClotheID FROM OrderRatio WHERE OrderID=?";
         ResultSet resultSet = CrudUtil.execute(sql,id);
 
         List<String>data=new ArrayList<>();
@@ -25,7 +25,7 @@ public class OrderRatioDAOImpl implements OrderRatioDAO {
         return data;
     }
     public OrderRatioDTO loadSize(String oId, String clID) throws SQLException {
-        String sql="SELECT * FROM OrderRatioDTO WHERE OrderID=? AND ClotheID=?";
+        String sql="SELECT * FROM OrderRatio WHERE OrderID=? AND ClotheID=?";
         ResultSet resultSet = CrudUtil.execute(sql,oId,clID);
         if (resultSet.next()){
             return new OrderRatioDTO(
@@ -51,7 +51,7 @@ public class OrderRatioDAOImpl implements OrderRatioDAO {
         return result;
     }
     public boolean addRatio(ObservableList<OrderRatioTM> order, String id) throws SQLException {
-        String sql = "INSERT INTO OrderRatioDTO (OrderID,ClotheID,Disc,Colour,SQty,MQty,LQty,XLQty,XXLQty ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO OrderRatio (OrderID,ClotheID,Disc,Colour,SQty,MQty,LQty,XLQty,XXLQty ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
         int routs=0;
         for (int i = 0; i < order.size(); i++) {
             OrderRatioTM orderRatio = order.get(i);
@@ -75,17 +75,25 @@ public class OrderRatioDAOImpl implements OrderRatioDAO {
         return false;
     }
     public String generateNewID() throws SQLException {
-        ResultSet rst = CrudUtil.execute("SELECT ClotheID FROM OrderRatioDTO ORDER BY ClotheID DESC LIMIT 1");
-        if (rst.next()) {
-            String id = rst.getString("id");
-            int newCustomerId = Integer.parseInt(id.replace("Ra0-", "")) + 1;
-            return String.format("Ra0-%03d", newCustomerId);
-        } else {
-            return "Ra0-001";
+        String sql = "SELECT ClotheID FROM OrderRatio ORDER BY ClotheID DESC LIMIT 1";
+        ResultSet resultSet = CrudUtil.execute(sql);
+
+        if (resultSet.next()) {
+            return splitOrderId(resultSet.getString(1));
         }
+        return splitOrderId(null);
+    }
+    public String splitOrderId(String currentId) {
+        if (currentId != null) {
+            String[] strings = currentId.split("Cl-");
+            int id = Integer.parseInt(strings[1]);
+            id++;
+            return "Cl-" + id;
+        }
+        return "Cl-10000";
     }
     public String searchClothDetail(String selectedItem) throws SQLException {
-        String sql = "SELECT Disc FROM OrderRatioDTO WHERE ClotheID=?";
+        String sql = "SELECT Disc FROM OrderRatio WHERE ClotheID=?";
         ResultSet resultSet = CrudUtil.execute(sql,selectedItem);
         if (resultSet.next()){
             return resultSet.getString(1);

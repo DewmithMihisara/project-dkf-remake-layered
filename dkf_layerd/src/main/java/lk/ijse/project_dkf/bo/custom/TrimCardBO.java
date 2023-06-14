@@ -2,7 +2,7 @@ package lk.ijse.project_dkf.bo.custom;
 
 import javafx.collections.ObservableList;
 import lk.ijse.project_dkf.bo.SuperBO;
-import lk.ijse.project_dkf.tm.TrimCardTM;
+import lk.ijse.project_dkf.view.tm.TrimCardTM;
 
 import java.sql.SQLException;
 

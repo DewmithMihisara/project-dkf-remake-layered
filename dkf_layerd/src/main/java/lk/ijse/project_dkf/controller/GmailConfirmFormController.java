@@ -7,11 +7,10 @@ import javafx.scene.layout.AnchorPane;
 import lk.ijse.project_dkf.animation.ShakeTextAnimation;
 import lk.ijse.project_dkf.bo.BOFactory;
 import lk.ijse.project_dkf.bo.custom.GmailConfirmBO;
-import lk.ijse.project_dkf.bo.custom.impl.GmailConfirmBOImpl;
-import lk.ijse.project_dkf.notification.PopUps;
-import lk.ijse.project_dkf.util.AlertTypes;
-import lk.ijse.project_dkf.util.Navigation;
-import lk.ijse.project_dkf.util.Rout;
+import lk.ijse.project_dkf.controller.util.PopUps;
+import lk.ijse.project_dkf.controller.util.AlertTypes;
+import lk.ijse.project_dkf.controller.util.Navigation;
+import lk.ijse.project_dkf.controller.util.Rout;
 import lk.ijse.project_dkf.validation.inputsValidation;
 
 import java.io.IOException;

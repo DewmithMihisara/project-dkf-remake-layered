@@ -13,9 +13,7 @@ import javazoom.jl.player.Player;
 import lk.ijse.project_dkf.animation.SetTime;
 import lk.ijse.project_dkf.bo.BOFactory;
 import lk.ijse.project_dkf.bo.custom.MainDashBoardBO;
-import lk.ijse.project_dkf.bo.custom.impl.MainDashBoardBOImpl;
-import lk.ijse.project_dkf.notification.PopUps;
-import lk.ijse.project_dkf.util.*;
+import lk.ijse.project_dkf.controller.util.*;
 import lk.ijse.project_dkf.voiceAssistant.Assistant;
 
 
@@ -28,7 +26,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
-import static lk.ijse.project_dkf.util.Rout.*;
+import static lk.ijse.project_dkf.controller.util.Rout.*;
 
 public class MainDashBoardController implements Initializable {
     @FXML

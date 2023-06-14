@@ -1,9 +1,6 @@
 package lk.ijse.project_dkf.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -11,6 +8,7 @@ import java.sql.Time;
 @AllArgsConstructor
 @Setter
 @Getter
+@ToString
 public class Cut {
     private String OrderID;
     private String ClotheID;

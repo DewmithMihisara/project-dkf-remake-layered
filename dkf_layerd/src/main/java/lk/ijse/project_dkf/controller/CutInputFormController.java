@@ -13,12 +13,11 @@ import lk.ijse.project_dkf.animation.SetTime;
 import lk.ijse.project_dkf.bo.BOFactory;
 import lk.ijse.project_dkf.bo.custom.CutBO;
 import lk.ijse.project_dkf.dto.CutDTO;
-import lk.ijse.project_dkf.tm.CutTM;
-import lk.ijse.project_dkf.bo.custom.impl.CutBOImpl;
-import lk.ijse.project_dkf.notification.PopUps;
-import lk.ijse.project_dkf.util.AlertTypes;
-import lk.ijse.project_dkf.util.Navigation;
-import lk.ijse.project_dkf.util.Rout;
+import lk.ijse.project_dkf.view.tm.CutTM;
+import lk.ijse.project_dkf.controller.util.PopUps;
+import lk.ijse.project_dkf.controller.util.AlertTypes;
+import lk.ijse.project_dkf.controller.util.Navigation;
+import lk.ijse.project_dkf.controller.util.Rout;
 import lk.ijse.project_dkf.validation.inputsValidation;
 
 import java.io.IOException;
@@ -87,16 +86,25 @@ public class CutInputFormController implements Initializable {
                     typeTxt.getText(),
                     sizeCmbBx.getSelectionModel().getSelectedItem()
             );
+            System.out.println(orderIdCmbBox.getSelectionModel().getSelectedItem()+" in cmb");
+            System.out.println(cutDTO.getCutID()+" in dto");
             String string= "CutDTO input of "+ cutDTO.getCutID();
             try {
                 boolean affectedRows = cutBO.add(cutDTO);
+                System.out.println(affectedRows +" cut");
                 if (affectedRows) {
                     PopUps.popUps(AlertTypes.CONFORMATION, "CutDTO Added" ,string);
                 }
             } catch (SQLException e) {
                 PopUps.popUps(AlertTypes.WARNING, "SQL Warning", "Database error when add cutDTO.");
+                e.printStackTrace();
             } finally {
                 loadValues(orderIdCmbBox.getSelectionModel().getSelectedItem());
+                orderIdCmbBox.setItems(null);
+                clrCmbBx.setItems(null);
+                sizeCmbBx.setItems(null);
+                typeTxt.setText("");
+                qtyTxt.setText("");
             }
         }
     }

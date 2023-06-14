@@ -29,7 +29,7 @@ public class CutBOImpl implements CutBO {
     }
 
     public boolean add(CutDTO cutDTO) throws SQLException {
-        return cutDAO.add(new Cut(cutDTO.getOrderId(),cutDTO.getClothId(),cutDTO.getDate(),cutDTO.getTime(),String.valueOf(cutDTO.getCutQty()),cutDTO.getType(),cutDTO.getSize()));
+        return cutDAO.add(new Cut(cutDTO.getCutID(),cutDTO.getClothId(),cutDTO.getDate(),cutDTO.getTime(),String.valueOf(cutDTO.getCutQty()),cutDTO.getType(),cutDTO.getSize()));
     }
 
     public boolean delete(CutDTO cutDTO) throws SQLException {

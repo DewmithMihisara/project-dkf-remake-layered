@@ -3,7 +3,7 @@ package lk.ijse.project_dkf.dao.custom.impl;
 import lk.ijse.project_dkf.dao.custom.UserDAO;
 import lk.ijse.project_dkf.dto.UserDTO;
 import lk.ijse.project_dkf.entity.User;
-import lk.ijse.project_dkf.util.CrudUtil;
+import lk.ijse.project_dkf.dao.custom.impl.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

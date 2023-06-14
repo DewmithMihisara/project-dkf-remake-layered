@@ -1,9 +1,8 @@
 package lk.ijse.project_dkf.dao.custom.impl;
 
 import lk.ijse.project_dkf.dao.custom.LogHistoryDAO;
-import lk.ijse.project_dkf.dto.LogHistoryDTO;
 import lk.ijse.project_dkf.entity.LogHistory;
-import lk.ijse.project_dkf.util.CrudUtil;
+import lk.ijse.project_dkf.dao.custom.impl.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,7 +13,7 @@ import java.util.List;
 
 public class LogHistoryDAOImpl implements LogHistoryDAO {
     public void save(LogHistory logHistory) throws SQLException {
-        String sql ="INSERT INTO LogHistoryDTO (UserName, LogIn, logOut) VALUES(?, ?, ?)";
+        String sql ="INSERT INTO LogHistory (UserName, LogIn, logOut) VALUES(?, ?, ?)";
         CrudUtil.execute(
                 sql,
                 logHistory.getUserName(),
@@ -30,7 +29,7 @@ public class LogHistoryDAOImpl implements LogHistoryDAO {
 
     public List<LogHistory> getAll() throws SQLException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String sql = "SELECT * FROM LogHistoryDTO";
+        String sql = "SELECT * FROM LogHistory";
         ResultSet resultSet = CrudUtil.execute(sql);
 
         ArrayList<LogHistory> logHistories=new ArrayList<>();
@@ -57,7 +56,7 @@ public class LogHistoryDAOImpl implements LogHistoryDAO {
 
 
     public boolean isHave() throws SQLException {
-        String sql = "SELECT * FROM LogHistoryDTO";
+        String sql = "SELECT * FROM LogHistory";
         ResultSet resultSet = CrudUtil.execute(sql);
         return resultSet.next();
     }

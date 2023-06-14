@@ -1,10 +1,9 @@
 package lk.ijse.project_dkf.dao.custom.impl;
 
 import lk.ijse.project_dkf.dao.custom.OutputDAO;
-import lk.ijse.project_dkf.dto.OutputDTO;
 import lk.ijse.project_dkf.entity.Output;
-import lk.ijse.project_dkf.tm.OutputTM;
-import lk.ijse.project_dkf.util.CrudUtil;
+import lk.ijse.project_dkf.view.tm.OutputTM;
+import lk.ijse.project_dkf.dao.custom.impl.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +14,7 @@ import java.util.List;
 
 public class OutputDAOImpl implements OutputDAO {
     public boolean add(Output output) throws SQLException {
-        String sql ="INSERT INTO OutputDTO (OutputID, Day, Time, ClotheID, size, DailyOut ) VALUES(?, ?, ?, ?, ?, ?)";
+        String sql ="INSERT INTO Output (OutputID, Day, Time, ClotheID, size, DailyOut ) VALUES(?, ?, ?, ?, ?, ?)";
         return CrudUtil.execute(
                 sql,
                 output.getOutputID(),
@@ -33,7 +32,7 @@ public class OutputDAOImpl implements OutputDAO {
     }
 
     public List<Output> getAll(String ids) throws SQLException {
-        String sql = "SELECT * FROM OutputDTO WHERE OutputID =?";
+        String sql = "SELECT * FROM Output WHERE OutputID =?";
         ResultSet resultSet = CrudUtil.execute(sql,ids);
 
         ArrayList<Output> outputs =new ArrayList<>();
@@ -51,7 +50,7 @@ public class OutputDAOImpl implements OutputDAO {
         return outputs;
     }
     public boolean delete(Output output) throws SQLException {
-        String sql="DELETE FROM OutputDTO WHERE OutputID=? AND Day=? AND Time=?";
+        String sql="DELETE FROM Output WHERE OutputID=? AND Day=? AND Time=?";
         boolean result = CrudUtil.execute(
                 sql,
                 output.getOutputID(),

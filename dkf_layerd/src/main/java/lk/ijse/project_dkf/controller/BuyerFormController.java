@@ -7,17 +7,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.project_dkf.animation.ShakeTextAnimation;
-import lk.ijse.project_dkf.animation.defueltText;
 import lk.ijse.project_dkf.bo.BOFactory;
 import lk.ijse.project_dkf.bo.custom.BuyerBO;
 import lk.ijse.project_dkf.dto.BuyerDTO;
-import lk.ijse.project_dkf.tm.BuyerTM;
-import lk.ijse.project_dkf.bo.custom.impl.BuyerBOImpl;
-import lk.ijse.project_dkf.notification.PopUps;
-import lk.ijse.project_dkf.util.AlertTypes;
-import lk.ijse.project_dkf.util.Navigation;
-import lk.ijse.project_dkf.util.Rout;
+import lk.ijse.project_dkf.view.tm.BuyerTM;
+import lk.ijse.project_dkf.controller.util.PopUps;
+import lk.ijse.project_dkf.controller.util.AlertTypes;
+import lk.ijse.project_dkf.controller.util.Navigation;
+import lk.ijse.project_dkf.controller.util.Rout;
 import lk.ijse.project_dkf.validation.inputsValidation;
 
 import java.io.IOException;
@@ -74,7 +71,7 @@ public class BuyerFormController implements Initializable {
     void addBtnOnAction(ActionEvent event) throws IOException {
         name = inputsValidation.isNullTxt(buyerNameTxt);
         address = inputsValidation.isNullTxt(buyerAddTxt);
-        cuntact = inputsValidation.isNullTxt(BuyerCnTxt);
+        cuntact = inputsValidation.isNumberOrNull(BuyerCnTxt);
 
         if (name && address && cuntact) {
             BuyerDTO buyerDTO = new BuyerDTO(buyerIdTxt.getText(), buyerNameTxt.getText(), BuyerCnTxt.getText(), buyerAddTxt.getText());

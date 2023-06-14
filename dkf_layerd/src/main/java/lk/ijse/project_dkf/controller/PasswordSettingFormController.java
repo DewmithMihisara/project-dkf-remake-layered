@@ -11,11 +11,10 @@ import javafx.scene.paint.Color;
 import lk.ijse.project_dkf.animation.ShakeTextAnimation;
 import lk.ijse.project_dkf.bo.BOFactory;
 import lk.ijse.project_dkf.bo.custom.PasswordSettingsBO;
-import lk.ijse.project_dkf.bo.custom.impl.PasswordSettingsBOImpl;
-import lk.ijse.project_dkf.notification.PopUps;
-import lk.ijse.project_dkf.util.AlertTypes;
-import lk.ijse.project_dkf.util.Navigation;
-import lk.ijse.project_dkf.util.Rout;
+import lk.ijse.project_dkf.controller.util.PopUps;
+import lk.ijse.project_dkf.controller.util.AlertTypes;
+import lk.ijse.project_dkf.controller.util.Navigation;
+import lk.ijse.project_dkf.controller.util.Rout;
 
 import java.io.IOException;
 import java.sql.SQLException;

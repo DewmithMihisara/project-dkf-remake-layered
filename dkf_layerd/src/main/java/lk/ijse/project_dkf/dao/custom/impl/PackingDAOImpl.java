@@ -1,10 +1,9 @@
 package lk.ijse.project_dkf.dao.custom.impl;
 
 import lk.ijse.project_dkf.dao.custom.PackingDAO;
-import lk.ijse.project_dkf.dto.PackDTO;
 import lk.ijse.project_dkf.entity.Packing;
-import lk.ijse.project_dkf.tm.PackingTM;
-import lk.ijse.project_dkf.util.CrudUtil;
+import lk.ijse.project_dkf.view.tm.PackingTM;
+import lk.ijse.project_dkf.dao.custom.impl.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

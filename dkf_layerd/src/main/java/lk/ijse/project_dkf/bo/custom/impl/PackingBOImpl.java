@@ -58,8 +58,10 @@ public class PackingBOImpl implements PackingBO {
             con.setAutoCommit(false);
 
             boolean isPackAdd = add(packDTO);
+            System.out.println(isPackAdd+" pack");
             if (isPackAdd){
                 boolean isStockAdd= add(stockDTO);
+                System.out.println(isStockAdd+" stock");
                 if (isStockAdd){
                     System.out.println(stockDTO);
                     con.commit();

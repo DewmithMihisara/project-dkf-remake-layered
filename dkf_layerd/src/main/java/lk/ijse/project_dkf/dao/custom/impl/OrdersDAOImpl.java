@@ -2,9 +2,8 @@ package lk.ijse.project_dkf.dao.custom.impl;
 
 import lk.ijse.project_dkf.dao.custom.OrdersDAO;
 import lk.ijse.project_dkf.dto.BuyerDTO;
-import lk.ijse.project_dkf.dto.OrderDTO;
 import lk.ijse.project_dkf.entity.Order;
-import lk.ijse.project_dkf.util.CrudUtil;
+import lk.ijse.project_dkf.dao.custom.impl.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -56,14 +55,22 @@ public class OrdersDAOImpl implements OrdersDAO {
         return result;
     }
     public String generateNewID() throws SQLException {
-        ResultSet rst = CrudUtil.execute("SELECT OrderID FROM Orders ORDER BY OrderID DESC LIMIT 1");
-        if (rst.next()) {
-            String id = rst.getString("id");
-            int newCustomerId = Integer.parseInt(id.replace("Or0-", "")) + 1;
-            return String.format("Or0-%03d", newCustomerId);
-        } else {
-            return "Or0-001";
+        String sql="SELECT OrderID FROM Orders ORDER BY OrderID DESC LIMIT 1";
+        ResultSet resultSet = CrudUtil.execute(sql);
+
+        if (resultSet.next()) {
+            return splitOrderId(resultSet.getString(1));
         }
+        return splitOrderId(null);
+    }
+    public String splitOrderId(String currentId) {
+        if(currentId != null) {
+            String[] strings = currentId.split("o");
+            int id = Integer.parseInt(strings[1]);
+            id++;
+            return "o" + id;
+        }
+        return "o10000";
     }
     public BuyerDTO searchBuyer(String id) throws SQLException {
         String sql = "SELECT BuyerID FROM Orders WHERE OrderID=?";

@@ -11,10 +11,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import lk.ijse.project_dkf.bo.BOFactory;
 import lk.ijse.project_dkf.bo.custom.TrimCardBO;
-import lk.ijse.project_dkf.bo.custom.impl.TrimCardBOImpl;
-import lk.ijse.project_dkf.tm.TrimCardTM;
-import lk.ijse.project_dkf.util.Navigation;
-import lk.ijse.project_dkf.util.Rout;
+import lk.ijse.project_dkf.view.tm.TrimCardTM;
+import lk.ijse.project_dkf.controller.util.Navigation;
+import lk.ijse.project_dkf.controller.util.Rout;
 import lk.ijse.project_dkf.validation.inputsValidation;
 
 import java.io.IOException;

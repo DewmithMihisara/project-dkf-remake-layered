@@ -3,8 +3,8 @@ package lk.ijse.project_dkf.dao.custom.impl;
 import lk.ijse.project_dkf.dao.custom.BuyerDAO;
 import lk.ijse.project_dkf.dto.BuyerDTO;
 import lk.ijse.project_dkf.entity.Buyer;
-import lk.ijse.project_dkf.tm.BuyerTM;
-import lk.ijse.project_dkf.util.CrudUtil;
+import lk.ijse.project_dkf.view.tm.BuyerTM;
+import lk.ijse.project_dkf.dao.custom.impl.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -70,14 +70,23 @@ public class BuyerDAOImpl implements BuyerDAO {
     }
 
     public String generateNewID() throws SQLException {
-        ResultSet rst = CrudUtil.execute("SELECT BuyerID FROM Buyer ORDER BY BuyerID DESC LIMIT 1");
-        if (rst.next()) {
-            String id = rst.getString("id");
-            int newCustomerId = Integer.parseInt(id.replace("B00-", "")) + 1;
-            return String.format("B00-%03d", newCustomerId);
-        } else {
-            return "B00-001";
+        String sql="SELECT BuyerID FROM Buyer ORDER BY BuyerID DESC LIMIT 1";
+        ResultSet resultSet = CrudUtil.execute(sql);
+
+        if (resultSet.next()) {
+            return splitOrderId(resultSet.getString(1));
         }
+        return splitOrderId(null);
+    }
+    public String splitOrderId(String currentId) {
+
+        if(currentId != null) {
+            String[] strings = currentId.split("b");
+            int id = Integer.parseInt(strings[1]);
+            id++;
+            return "b" + id;
+        }
+        return "b10000";
     }
 
     public List<String> loadIds() throws SQLException {

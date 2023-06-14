@@ -9,9 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import lk.ijse.project_dkf.animation.ShakeTextAnimation;
 import lk.ijse.project_dkf.bo.BOFactory;
 import lk.ijse.project_dkf.bo.custom.ForgotPwBO;
-import lk.ijse.project_dkf.bo.custom.impl.ForgotPwBOImpl;
-import lk.ijse.project_dkf.notification.PopUps;
-import lk.ijse.project_dkf.util.*;
+import lk.ijse.project_dkf.controller.util.*;
 
 import java.io.IOException;
 import java.net.URL;

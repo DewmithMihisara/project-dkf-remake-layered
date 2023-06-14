@@ -13,6 +13,7 @@ public interface OrdersDAO extends CrudDAO<Order, String> {
 
 
     String generateNewID() throws SQLException;
+    String splitOrderId(String currentId);
 
     BuyerDTO searchBuyer(String id) throws SQLException;
 }
