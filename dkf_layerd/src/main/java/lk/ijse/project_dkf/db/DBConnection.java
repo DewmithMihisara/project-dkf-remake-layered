@@ -11,8 +11,8 @@ public class DBConnection {
     private DBConnection() throws SQLException {
         con= DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/dkf",
-                "root",
-                "Dew@2005"
+                <user_name>,
+                <password>
         );
     }
     public static DBConnection getInstance() throws SQLException {
